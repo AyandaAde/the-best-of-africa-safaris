@@ -33,7 +33,7 @@ export default function HomePage() {
           <div className="flex flex-col gap-5">
             <p className="font-bold text-base md:text-lg">
               Our journey began September 2004 when our founder Modest Hello
-              Bayo, fell in love with the untamed beauty of Tanzania's
+              Bayo, fell in love with the untamed beauty of Tanzania&apos;s
               wilderness.
             </p>
             <p className="text-base md:text-lg">
