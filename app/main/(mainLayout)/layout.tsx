@@ -5,6 +5,8 @@ import Navbar from "@/components/NavBar";
 import localFont from "next/font/local";
 import Footer from "@/components/Footer";
 import MobileNav from "@/components/MobileNav";
+import QueryProvider from "@/components/query-providet";
+import { Toaster } from "sonner";
 
 const chillax = localFont({
   src: "../../../public/fonts/Chillax-Variable.ttf",
@@ -13,10 +15,9 @@ const chillax = localFont({
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "900"],
+  weight: ["200", "300", "400", "500", "600", "700", "900"],
   style: ["normal", "italic"],
   variable: "--font-poppins",
-
 });
 
 export const metadata: Metadata = {
@@ -32,10 +33,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} ${chillax.variable}`}>
-        <Navbar className="hidden md:block"/>
-        <MobileNav/>
+        <QueryProvider>
+          <Navbar className="hidden md:block" />
+          <MobileNav />
           {children}
-          <Footer/>
+          <Toaster richColors/>
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );

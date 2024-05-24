@@ -7,6 +7,7 @@ import { SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
 import { useAuth, UserButton, useClerk } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import DarkModeButton from "./DarkModeButton";
 
 
 const MobileNav = () => {
@@ -16,17 +17,18 @@ const MobileNav = () => {
 
     return (
         <Sheet>
-            <SheetTrigger className="md:hidden sticky top-0 z-10 left-[90vw] sm:left-[96vw]">
+            <SheetTrigger className="md:hidden sticky top-0 z-20 left-[90vw] sm:left-[96vw]">
                 <Menu className="text-primary" />
             </SheetTrigger>
             <SheetContent>
-                <SheetTitle className="flex mt-5 px-3 justify-between items-center">
+                <SheetTitle className="flex flex-col mt-5 px-3">
                     <SignedIn>
-                        {user?.fullName}
+                        <p className="text-green-800 dark:text-primary">{user?.fullName}</p>
                     </SignedIn>
                     <SignedOut>
-                        <p className="font-black text-primary">Welcome to The Best of Africa Safaris</p>
+                        <p className="font-black text-green-800 dark:text-primary">Welcome to The Best of Africa Safaris</p>
                     </SignedOut>
+                    <DarkModeButton/>
                 </SheetTitle>
                 <Separator className="my-3" />
                 <SheetDescription className="flex">

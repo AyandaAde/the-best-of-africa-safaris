@@ -13,7 +13,7 @@ export default function TextSlides(){
         Explore
       </h1>
       <h1 className="absolute top-[20vh] left-[325vw]">
-        Click to continue
+        Click to continue...<span className="md:hidden">...</span>
       </h1>
         </div>
     )

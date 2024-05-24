@@ -9,12 +9,12 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative -bottom-10 py-10 md:px-3 bg-gray-100 dark:bg-neutral-800">
+      <footer className="relative -bottom-10 py-10 md:px-3 text-gray-200 bg-[url('/images/background__layout.png')] bg-[#282f34] dark:bg-neutral-800">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-16 items-start justify-between">
             <Link
               href="/main/home"
-              className="md:mr-10 pt-3 flex flex-row items-center hover:text-primary gap-1"
+              className="md:mr-10 pt-3 flex flex-row items-center text-gray-200 hover:text-primary gap-1"
             >
               <Image
                 src="/images/boasafarislogo.png"
@@ -27,7 +27,7 @@ export default function Footer() {
                 The Best of Africa Safaris
               </span>
             </Link>
-            <div>
+            <div className="md:ml-20">
               <h4 className="font-semibold text-lg py-3">Contact</h4>
               <div className="flex-1">
                 <div className="flex items-center py-4">
@@ -52,42 +52,36 @@ export default function Footer() {
                     +255742446107
                   </Link>
                 </div>
-                <div className="flex items-center pt-4">
-                  <CodeIcon />
-                  <p className="ml-2">
-                    Made by{" "}
-                    <Link
-                      href="https://ayanda.vercel.app/"
-                      className="underline hover:text-primary"
-                    >
-                      Ayanda Kinyambo
-                    </Link>
-                  </p>
-                </div>
               </div>
             </div>
-            <div className="flex-1 md:text-right">
+            <div className="md:text-left">
               <h4 className="font-semibold text-lg py-3">Company</h4>
                 <Link
-                  href="/"
+                  href="/main/home"
                   className="pb-4 hover:text-primary block"
                 >
                   Home
                 </Link>
                 <Link
-                  href="/"
+                  href="/main/about"
                   className="pb-4 hover:text-primary block"
                 >
                   About
                 </Link>
                 <Link
-                  href="/"
+                  href="/main/tours"
+                  className="pb-4 hover:text-primary block"
+                >
+                  Tours
+                </Link>
+                <Link
+                  href="/main/gallery"
                   className="pb-4 hover:text-primary block"
                 >
                   Gallery
                 </Link>
             </div>
-            <div className="flex-1 md:text-right">
+            <div className="md:text-left">
               <h4 className="font-semibold text-lg py-3">Legal</h4>
               <Link
                 href={`/main/about`}
@@ -111,10 +105,24 @@ export default function Footer() {
           </div>
         </div>
         <Separator className="my-10 bg-neutral-700" />
+        <div className="flex flex-col md:flex-row items-center justify-between w-full">
         <p className="px-4 text-center">
           {" "}
           &copy; {year} The Best of Africa Safaris.
         </p>
+        <div className="flex items-center pt-4">
+                  <CodeIcon />
+                  <p className="ml-2">
+                    Made by{" "}
+                    <Link
+                      href="https://ayanda.vercel.app/"
+                      className="underline hover:text-primary"
+                    >
+                      Ayanda Kinyambo
+                    </Link>
+                  </p>
+                </div>
+        </div>
       </footer>
     </>
   );

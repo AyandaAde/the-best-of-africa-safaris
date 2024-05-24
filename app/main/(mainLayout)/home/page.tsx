@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import Testimonials from "@/components/Testimonials";
 import { Button } from "@/components/ui/button";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import Image from "next/image";
@@ -9,7 +10,7 @@ export default function HomePage() {
     <div>
       <Hero />
       <div className="relative w-full bg-gradient-to-b from-white to-[#F3F5F4] dark:from-black dark:to-black text-black dark:text-white">
-      <div className="pt-40 w-3/4 mx-auto">
+      <div className="pt-20 md:pt-40 w-3/4 mx-auto">
         <div className="grid md:grid-cols-[.5fr_1fr] gap-9">
           <div className="flex flex-col gap-5">
             <div className="flex flex-row items-center">
@@ -24,7 +25,7 @@ export default function HomePage() {
                 variant={"link"}
                 className="w-full text-foreground hover:text-white hover:no-underline"
               >
-                <Link href="/main/about" className="w-full text-lg">
+                <Link href="/main/about" className="w-full text-base md:text-lg">
                   Read More
                 </Link>
               </Button>
@@ -61,9 +62,9 @@ export default function HomePage() {
       alt="Border"
       width={1000}
       height={1000}
-      className="relative -z-10 bottom-1 w-full h-10 md:h-auto dark:hidden mb-20 md:mb-40"
+      className="relative -z-10 bottom-1 w-full h-10 md:h-auto dark:hidden"
       />
-      <div className="flex flex-col justify-center items-center w-3/4 gap-3 mx-auto font-chillax mb-20 md:mb-40">
+      <div className="flex flex-col justify-center items-center w-3/4 gap-3 mx-auto font-chillax my-20 my:mb-40">
         <h3 className="text-black/60 dark:text-white/60 text-base">ANIMALS</h3>
         <h2 className="text-center text-3xl md:text-5xl"><span className="font-semibold">ANIMALS YOU</span> WILL MEET</h2>
         <div className="flex flex-row justify-center flex-wrap mt-6 gap-24">
@@ -109,55 +110,17 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div className="relative flex flex-col justify-center items-center w-screen gap-3 font-chillax">
-      <h3 className="text-black/60 dark:text-white/60 text-base">TESTIMONIALS</h3>
-      <div className="rounded-md flex flex-col antialiased dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden mb-30">
-      <InfiniteMovingCards
-        items={testimonials}
-        direction="right"
-        speed="slow"
-      />
-    </div>
-    <Image
-      src={"/images/border.png"}
-      alt="Border"
-      width={1000}
-      height={1000}
-      className="relative -bottom-11 w-full h-24 dark:hidden"
-      />
+      <div className="relative">
+      <Testimonials/>
+      <Image
+    src={"/images/border.png"}
+    alt="Border"
+    width={1000}
+    height={1000}
+    className="relative -bottom-11 w-full h-24 dark:hidden"
+    />
       </div>
     </div>
   );
 };
 
-const testimonials = [
-  {
-    quote:
-      "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair.",
-    name: "Charles Dickens",
-    title: "A Tale of Two Cities",
-  },
-  {
-    quote:
-      "To be, or not to be, that is the question: Whether 'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take Arms against a Sea of troubles, And by opposing end them: to die, to sleep.",
-    name: "William Shakespeare",
-    title: "Hamlet",
-  },
-  {
-    quote: "All that we see or seem is but a dream within a dream.",
-    name: "Edgar Allan Poe",
-    title: "A Dream Within a Dream",
-  },
-  {
-    quote:
-      "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
-    name: "Jane Austen",
-    title: "Pride and Prejudice",
-  },
-  {
-    quote:
-      "Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.",
-    name: "Herman Melville",
-    title: "Moby-Dick",
-  },
-];

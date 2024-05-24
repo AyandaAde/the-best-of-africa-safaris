@@ -11,6 +11,12 @@ const nextConfig = {
             {
                 hostname: "images.unsplash.com",
             },
+            {
+                hostname: "demo.artureanec.com",
+            },
+            {
+                hostname: "plus.unsplash.com",
+            },
         ],
     },
     transpilePackages: ["three"],
