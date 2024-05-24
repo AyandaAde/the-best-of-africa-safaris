@@ -17,6 +17,45 @@ export default function ToursPage() {
     "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
     "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
   ];
+  
+  const projects = [
+    {
+      title: "Serengeti",
+      description:
+        "A technology company that builds economic infrastructure for the internet.",
+      link: "https://stripe.com",
+      imageUrl:
+        "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
+      price: "$300",
+    },
+    {
+      title: "Ngorongoro Crater",
+      description:
+        "A streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.",
+      link: "https://netflix.com",
+      imageUrl:
+        "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
+      price: "$400",
+    },
+    {
+      title: "Kilimanjaro",
+      description:
+        "A multinational technology company that specializes in Internet-related services and products.",
+      link: "https://google.com",
+      imageUrl:
+        "https://images.unsplash.com/photo-1641133293051-53a542184429?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHRhbnphbmlhJTIwc2FmYXJpJTIwbGlvbnN8ZW58MHx8MHx8fDA%3D",
+      price: "$250",
+    },
+    {
+      title: "Manyara National Park",
+      description:
+        "A technology company that focuses on building products that advance Facebook's mission of bringing the world closer together.",
+      link: "https://meta.com",
+      imageUrl:
+        "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
+      price: "$300",
+    },
+  ];  
 
   return (
     <div>
@@ -95,43 +134,4 @@ export default function ToursPage() {
       </div>
     </div>
   );
-}
-
-export const projects = [
-  {
-    title: "Serengeti",
-    description:
-      "A technology company that builds economic infrastructure for the internet.",
-    link: "https://stripe.com",
-    imageUrl:
-      "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-    price: "$300",
-  },
-  {
-    title: "Ngorongoro Crater",
-    description:
-      "A streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.",
-    link: "https://netflix.com",
-    imageUrl:
-      "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-    price: "$400",
-  },
-  {
-    title: "Kilimanjaro",
-    description:
-      "A multinational technology company that specializes in Internet-related services and products.",
-    link: "https://google.com",
-    imageUrl:
-      "https://images.unsplash.com/photo-1641133293051-53a542184429?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHRhbnphbmlhJTIwc2FmYXJpJTIwbGlvbnN8ZW58MHx8MHx8fDA%3D",
-    price: "$250",
-  },
-  {
-    title: "Manyara National Park",
-    description:
-      "A technology company that focuses on building products that advance Facebook's mission of bringing the world closer together.",
-    link: "https://meta.com",
-    imageUrl:
-      "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-    price: "$300",
-  },
-];
+};
