@@ -17,7 +17,7 @@ export default function ToursPage() {
     "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
     "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
   ];
-  
+
   const projects = [
     {
       title: "Serengeti",
@@ -105,7 +105,7 @@ export default function ToursPage() {
                   className="w-full h-full object-cover rounded-md"
                 />
                 <div className="relative w-fit z-10 bottom-20 ml-3">
-                  <h2 className="font-semibold text-2xl">
+                  <h2 className="font-semibold text-black text-2xl">
                     <motion.div
                       initial={{
                         opacity: 0,

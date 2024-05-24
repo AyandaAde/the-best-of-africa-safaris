@@ -17,7 +17,7 @@ const MobileNav = () => {
 
     return (
         <Sheet>
-            <SheetTrigger className="md:hidden sticky top-0 z-20 left-[90vw] sm:left-[96vw]">
+            <SheetTrigger className="md:hidden sticky top-1 z-20 left-[90vw] sm:left-[96vw]">
                 <Menu className="text-primary" />
             </SheetTrigger>
             <SheetContent>

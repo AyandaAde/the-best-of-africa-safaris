@@ -15,7 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Label } from "./label";
-import { SearchIcon } from "lucide-react";
+import { Loader2, SearchIcon } from "lucide-react";
 import { Separator } from "./separator";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -34,10 +34,10 @@ export default function SearchComp({
   });
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [adultCount, setAdultCount] = useState(0);
+  const [adultCount, setAdultCount] = useState(1);
   const [childrenCount, setChildrenCount] = useState(0);
   const [infantCount, setInfantCount] = useState(0);
-  const [guests, setGuests] = useState(0);
+  const [guests, setGuests] = useState(1);
 
   const search = useMutation({
     mutationFn: async () => {
@@ -305,7 +305,7 @@ export default function SearchComp({
               <Label htmlFor="guests" className="relative bottom-1">
                 Guests
               </Label>
-              {guests ? (
+              {guests >= 2 ? (
                 <p className="text-sm text-foreground font-normal">
                   {guests} Guest(s)
                 </p>
@@ -329,7 +329,7 @@ export default function SearchComp({
                   <div className="flex flex-row items-center w-[150px] justify-between">
                     <Button
                       onClick={() => {
-                        if (adultCount >= 1) setAdultCount(adultCount - 1);
+                        if (adultCount >= 2) setAdultCount(adultCount - 1);
                         setGuests(adultCount - 1 + childrenCount + infantCount);
                       }}
                       variant={"outline"}
@@ -424,7 +424,13 @@ export default function SearchComp({
           variant="default"
           className="rounded-full w-12 h-12"
         >
-          <SearchIcon />
+            {
+                search.isPending ? (
+                    <Loader2 className="animate-spin w-10 h-10"/>
+                ) : (
+                    <SearchIcon />
+                )
+            }
         </Button>
       </div>
 

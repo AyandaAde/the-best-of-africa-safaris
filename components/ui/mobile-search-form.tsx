@@ -15,7 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Label } from "./label";
-import { SearchIcon } from "lucide-react";
+import { Loader2, SearchIcon } from "lucide-react";
 import { Separator } from "./separator";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -35,7 +35,7 @@ export default function MobileSearchComp({
   });
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [adultCount, setAdultCount] = useState(0);
+  const [adultCount, setAdultCount] = useState(1);
   const [childrenCount, setChildrenCount] = useState(0);
   const [infantCount, setInfantCount] = useState(0);
   const [guests, setGuests] = useState(0);
@@ -215,12 +215,15 @@ export default function MobileSearchComp({
         });
     } else if(!date)  toast.error("Please select a date.");
     else if(guests === 0)  toast.error("Please select number of guests.");
-   
+    setGuests(0);
+    setAdultCount(1);
+    setChildrenCount(0);
+    setInfantCount(0);
   };
   return (
     <form
       className={cn(
-        "w-10/12 md:flex flex-col gap-3 px-10 mx-auto bg-white dark:bg-zinc-800 overflow-y-scroll overflow-x-hidden transition duration-200",
+        "w-10/12 md:flex flex-col gap-3 px-10 mx-auto bg-white dark:bg-background overflow-y-scroll overflow-x-hidden transition duration-200",
         value && "bg-gray-50"
       )}
       onSubmit={handleSubmit}
@@ -232,7 +235,7 @@ export default function MobileSearchComp({
         )}
         ref={canvasRef}
       />
-      <div className="flex flex-row items-center w-full border border-1 border-neutral-400 hover:bg-accent rounded-full px-2 my-5">
+      <div className="flex flex-row items-center w-full border border-1 border-neutral-400 dark:bg-card rounded-full px-2 my-5">
         <SearchIcon/>
       <div className="relative flex flex-col pt-1">
         <input
@@ -282,7 +285,7 @@ export default function MobileSearchComp({
       </div>
       </div>
       </div>
-      <div className="flex flex-col items-center rounded-full p-2 w-full h-16">
+      <Card className="relative right-4 mb-4 flex flex-col rounded-full items-center p-2 w-[260px] mx-auto h-16 dark:bg-card">
         <Label htmlFor="date">
           When
         </Label>
@@ -325,16 +328,16 @@ export default function MobileSearchComp({
             </PopoverContent>
           </Popover>
         </div>
-      </div>
+      </Card>
       <div className="flex flex-col gap-5 justify-between items-center rounded-full p-1 w-full">
-        <Card className="flex flex-col gap-10 w-[260px]">
+        <Card className="flex flex-col gap-10 w-[260px] rounded-3xl">
             <CardHeader
               className="flex flex-col gap-2 items-center justify-between w-full rounded-full h-11"
             >
               <Label htmlFor="guests">
                 Who
               </Label>
-              {guests ? (
+              {guests >= 2 ? (
                 <p className="text-sm text-foreground font-normal">
                   {guests} Guest(s)
                 </p>
@@ -357,11 +360,12 @@ export default function MobileSearchComp({
                   <div className="flex flex-row items-center w-[100px] justify-between">
                     <Button
                       onClick={() => {
-                        if (adultCount >= 1){
+                        if (adultCount >= 2){
                             setAdultCount(adultCount - 1);
                         setGuests(adultCount - 1 + childrenCount + infantCount);
                         };
                       }}
+                      type="button"
                       variant={"outline"}
                       className="rounded-full w-8 h-8"
                     >
@@ -373,6 +377,7 @@ export default function MobileSearchComp({
                         setAdultCount(adultCount + 1);
                         setGuests(adultCount + 1 + childrenCount + infantCount);
                       }}
+                      type="button"
                       variant={"outline"}
                       className="rounded-full w-8 h-8"
                     >
@@ -396,6 +401,7 @@ export default function MobileSearchComp({
                         setGuests(childrenCount - 1 + adultCount + infantCount);
                         };
                       }}
+                      type="button"
                       variant={"outline"}
                       className="rounded-full w-8 h-8"
                     >
@@ -407,6 +413,7 @@ export default function MobileSearchComp({
                         setChildrenCount(childrenCount + 1);
                         setGuests(childrenCount + 1 + adultCount + infantCount);
                       }}
+                      type="button"
                       variant={"outline"}
                       className="rounded-full w-8 h-8"
                     >
@@ -430,6 +437,7 @@ export default function MobileSearchComp({
                         setGuests(infantCount - 1 + adultCount + childrenCount);
                         };
                       }}
+                      type="button"
                       variant={"outline"}
                       className="rounded-full w-8 h-8"
                     >
@@ -441,6 +449,7 @@ export default function MobileSearchComp({
                         setInfantCount(infantCount + 1);
                         setGuests(infantCount + 1 + adultCount + childrenCount);
                       }}
+                      type="button"
                       variant={"outline"}
                       className="rounded-full w-8 h-8"
                     >
@@ -452,14 +461,21 @@ export default function MobileSearchComp({
             </div>
           </CardContent>
           </Card>
-        <Button
+      </div>
+      <Button
           type="submit"
           variant="default"
-          className="rounded-full w-12 h-12 mx-auto"
+          className="rounded-full mt-4 w-12 h-12 relative left-[calc(50%-24px)]"
         >
-          <SearchIcon />
+            {
+                search.isPending ? (
+                    <Loader2 className="animate-spin w-10 h-10"/>
+                ) : (
+                    <SearchIcon />
+                )
+            }
+        
         </Button>
-      </div>
     </form>
   );
 }
