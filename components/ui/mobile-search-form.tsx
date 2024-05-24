@@ -285,7 +285,7 @@ export default function MobileSearchComp({
       </div>
       </div>
       </div>
-      <Card className="relative right-4 mb-4 flex flex-col rounded-full items-center p-2 w-[260px] mx-auto h-16 dark:bg-card">
+      <Card className="mb-4 flex flex-col rounded-full items-center p-2 w-[260px] mx-auto h-16 dark:bg-card">
         <Label htmlFor="date">
           When
         </Label>
