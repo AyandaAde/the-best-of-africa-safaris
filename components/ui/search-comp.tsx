@@ -200,18 +200,26 @@ export default function SearchComp({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     vanishAndSubmit();
-    search.mutate(undefined, {
-        onSuccess: (data) => {
-            console.log("new search query created", {data});
-            search.mutate();
-            toast.success("Search query successfully created");
-        },
-        onError: (error) => {
-            console.log("search query error", {error});
-            toast.error("Error creating search query. Please try again.");
-        }
-    });
+    if(date && guests){
+      search.mutate(undefined, {
+          onSuccess: (data) => {
+              console.log("new search query created", {data});
+              search.mutate();
+              toast.success("Search query successfully created");
+          },
+          onError: (error) => {
+              console.log("search query error", {error});
+              toast.error("Error creating search query. Please try again.");
+          }
+      });
+  } else if(!date)  toast.error("Please select a date.");
+  else if(guests === 0)  toast.error("Please select number of guests.");
+  setGuests(0);
+  setAdultCount(1);
+  setChildrenCount(0);
+  setInfantCount(0);
   };
+  
   return (
     <form
       className={cn(

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import localFont from "next/font/local";
+import Script from "next/script";
 
 const chillax = localFont({
   src: "../public/fonts/Chillax-Variable.ttf",
@@ -74,6 +75,9 @@ export default function RootLayout({
     }}
     >
     <html lang="en">
+      <head>
+      <Script src="https://kit.fontawesome.com/1dce5cdcc1.js"/>
+      </head>
       <body className={`${poppins.className} ${chillax.variable}`}>
         <ThemeProvider
           attribute="class"

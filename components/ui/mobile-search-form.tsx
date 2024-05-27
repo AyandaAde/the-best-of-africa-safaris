@@ -223,7 +223,7 @@ export default function MobileSearchComp({
   return (
     <form
       className={cn(
-        "w-10/12 md:flex flex-col gap-3 px-10 mx-auto bg-white dark:bg-background overflow-y-scroll overflow-x-hidden transition duration-200",
+        "w-full flex flex-col items-center justify-center gap-3 px-10 mx-auto bg-white dark:bg-background overflow-y-scroll overflow-x-hidden transition duration-200",
         value && "bg-gray-50"
       )}
       onSubmit={handleSubmit}
