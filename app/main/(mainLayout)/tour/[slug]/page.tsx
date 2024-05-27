@@ -84,10 +84,10 @@ export default function page() {
                   {" "}
                   Embark on an unforgettable adventure in the heart of Tanzania:
                   The Serengeti Safari Tour Imagine yourself traversing the vast
-                  plains of the Serengeti National Park, the jewel of Tanzania's
+                  plains of the Serengeti National Park, the jewel of Tanzania&apos;s
                   wildlife crown. Our Serengeti Safari Tour promises an
                   immersive experience unlike any other, bringing you
-                  face-to-face with Africa's magnificent creatures.
+                  face-to-face with Africa&apos;s magnificent creatures.
                 </p>
                 {descriptionParagraphs.map((paragraph, index)=>(
                   <div key={index}>
