@@ -93,7 +93,7 @@ export default function BookTourCta({
     });
   }
   return (
-    <div className="px-7 py-6">
+    <div className="px-4 sm:px-7 py-6">
       <h3>
         <span
           className={`${
@@ -122,16 +122,18 @@ export default function BookTourCta({
                 id="date"
                 variant={"outline"}
                 className={cn(
-                  "w-[300px] justify-start text-left font-normal",
+                  "w-[200px] sm:w-[300px] justify-start text-left font-normal overflow-hidden",
                   !date && "text-muted-foreground"
                 )}
               >
-                <CalendarIcon className="mr-2 h-4 w-4" />
+                <CalendarIcon className="hidden sm:block mr-2 h-4 w-4" />
                 {date?.from ? (
                   date.to ? (
                     <>
-                      {format(date.from, "LLL dd, y")} -{" "}
-                      {format(date.to, "LLL dd, y")}
+                      <span className="hidden sm:block">{format(date.from, "LLL dd, y")} -{" "}</span>
+                      <span className="hidden sm:block">{format(date.to, "LLL dd, y")}</span>
+                      <span className="sm:hidden">{format(date.from, "MM/dd/y")} -{" "}</span>
+                      <span className="sm:hidden">{format(date.to, "MM/dd/y")}</span>
                     </>
                   ) : (
                     format(date.from, "LLL dd, y")
@@ -141,7 +143,10 @@ export default function BookTourCta({
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent
+            className="w-auto p-0"
+            align="center"
+            >
               <Calendar
                 initialFocus
                 mode="range"

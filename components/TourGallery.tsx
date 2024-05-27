@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, CircleXIcon, Images } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { AspectRatio } from "./ui/aspect-ratio";
 
 export default function TourGallery() {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
@@ -48,26 +49,30 @@ export default function TourGallery() {
   return (
     <div className="container mx-auto">
       <div className="grid md:grid-cols-2 relative px-3 gap-3">
-        <div className="h-[540px] relative rounded-2xl overflow-hidden">
-          <div className="hidden md:flex justify-center items-center w-full h-full">
+        <div className="relative rounded-2xl overflow-hidden">
+          <div className="hidden md:flex justify-center items-center">
+            <AspectRatio ratio={12/10}>
             <Image
               src={images[0]}
-              alt={`Room image ${currentPhotoIndex + 1}`}
-              width={680}
-              height={510}
-              className="object-cover rounded-sm w-full h-full hover:scale-110 transition duration-500 cursor-pointer"
+              alt={`Tour image ${currentPhotoIndex + 1}`}
+              fill
+              className="object-cover rounded-sm hover:scale-110 transition duration-500 cursor-pointer"
               onClick={openModal.bind(this, 0)}
             />
+            </AspectRatio>
           </div>
-          <div className="flex md:hidden justify-center items-center w-full h-full">
+          <div className="flex flex-col font-semibold text-xl md:hidden justify-center items-start gap-3 w-full h-full">
+            <h2>Gallery</h2>
+            <AspectRatio ratio={16/9}>
             <Image
               src={images[currentPhotoIndex]}
-              alt={`Room image ${currentPhotoIndex + 1}`}
+              alt={`Tour image ${currentPhotoIndex + 1}`}
               width={680}
               height={510}
               className="object-cover rounded-sm w-full h-full"
               onClick={openModal.bind(this, 0)}
             />
+            </AspectRatio>
           </div>
         </div>
         <div className="flex md:hidden justify-between items-center">
@@ -79,43 +84,46 @@ export default function TourGallery() {
             {currentPhotoIndex + 1}/{images.length}
           </span>
         </div>
-        <div className="hidden md:grid grid-cols-2 h-full gap-3">
+        <div className="hidden md:grid grid-cols-2 gap-3">
           {displayImages.map((image, index) => (
             <div
               key={index}
-              className="cursor-pointer h-64 rounded-2xl overflow-hidden"
+              className="cursor-pointer rounded-2xl overflow-hidden"
             >
+              <AspectRatio ratio={6/5}>
               <Image
                 src={image}
-                alt={`Room image ${index + 2}`}
+                alt={`Tour image ${index + 2}`}
                 width={680}
                 height={510}
                 className="object-cover rounded-sm w-full h-full hover:scale-110 transition duration-500"
               />
+              </AspectRatio>
             </div>
           ))}
            {remainingImagesCount > 0 && (
-                        <div className="cursor-pointer relative h-64 rounded-2xl overflow-hidden" onClick={openModal.bind(this, maximumVisibleImages)}>
+                        <div className="cursor-pointer relative rounded-2xl overflow-hidden" onClick={openModal.bind(this, maximumVisibleImages)}>
+                          <AspectRatio ratio={6/5}>
                             <Image
                                 src={images[maximumVisibleImages - 1]}
-                                alt={`Room image ${maximumVisibleImages}`}
+                                alt={`Tour image ${maximumVisibleImages}`}
                                 width={680}
                                 height={510}
                                 className='object-cover rounded-sm w-full h-full'
                             />
+                            </AspectRatio>
                             <div className="absolute cursor-pointer text-white inset-0 flex justify-center bg-[rgba(0,0,0,0.5)] items-center text-xl">
                                 + {remainingImagesCount}
                             </div>
                         </div>
                     )}
         </div>
-
         {showModal && (
           <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-90 z-[55] rounded-sm">
             <div className="h-[75vh] w-[320px] md:w-[700px] relative">
               <Image
                 src={images[currentPhotoIndex]}
-                alt={`Room image ${currentPhotoIndex + 1}`}
+                alt={`Tour image ${currentPhotoIndex + 1}`}
                 width={680}
                 height={510}
                 className="object-cover rounded-sm w-full h-full"
