@@ -28,7 +28,7 @@ const contactFormSchema = z.object({
 });
 
 type ContactForm = z.infer<typeof contactFormSchema>;
-export default function page() {
+export default function Contact() {
     const router = useRouter();
 
     const contactForm = useForm<ContactForm>({
