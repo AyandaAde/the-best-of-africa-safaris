@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, CircleXIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -122,13 +121,13 @@ export default function Gallery() {
           </Button>
         </motion.div>
       </ImagesSlider>
-      <div className="mt-20 md:mt-40 flex flex-row flex-wrap w-[900px] mx-auto gap-3">
+      <div className="mt-20 md:mt-40 flex flex-row flex-wrap md:w-[700px] lg:w-[900px] mx-auto gap-3">
         {animals.map((animal, index) => (
           <>
             <div
               key={index}
               onClick={() => setShowModal(true)}
-              className="relative shadow-xl w-[400px] h-[400px] rounded-xl group overflow-hidden"
+              className="relative shadow-xl w-[300px] h-[300px] md:w-[400px] md:h-[400px] mx-auto rounded-xl group overflow-hidden"
             >
               <Image
                 src={animal.imageUrl}
@@ -155,7 +154,7 @@ export default function Gallery() {
                 animate={{ opacity: 1 }}
                 transition={{duration:1}}
                 className="fixed bg-black/40 z-50 left-0 top-0 w-screen h-screen">
-              <Carousel className="w-full max-w-lg mx-auto relative top-[120px]">
+              <Carousel className="w-[300px] md:w-full max-w-lg mx-auto relative top-[120px]">
                 <CarouselContent>
                   {animal.images.map((image, index) => (
                     <CarouselItem key={index}>
