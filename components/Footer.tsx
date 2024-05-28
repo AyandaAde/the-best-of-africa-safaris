@@ -9,7 +9,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative -bottom-10 py-10 md:px-3 text-gray-200 bg-[url('/images/background__layout.png')] bg-[#282f34] dark:bg-neutral-800">
+      <footer className="relative py-10 md:px-3 text-gray-200 bg-[url('/images/background__layout.png')] bg-[#282f34] dark:bg-neutral-800">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-16 items-start justify-between">
             <Link
