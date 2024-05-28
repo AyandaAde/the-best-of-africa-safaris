@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import { Textarea2 } from "@/components/ui/textarea2";
 import { Button } from "@/components/ui/button";
-import { Contact, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
