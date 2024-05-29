@@ -44,6 +44,7 @@ import {
   LinearScale,
   BarElement,
 } from "chart.js";
+import { ButtonsCard } from "@/components/ui/tailwindcss-button";
 
 ChartJS.register(Tooltip, CategoryScale, LinearScale, BarElement);
 
@@ -121,6 +122,7 @@ export default function UserPage(props: { params: { id: string } }) {
         console.log("Review successfully submitted.", { data });
         submitReview.mutate(reviewData);
         toast.success("Review successfully submitted");
+        reviewForm.reset();
       },
       onError(error) {
         console.log("Error submitting review", { error });
@@ -135,6 +137,7 @@ export default function UserPage(props: { params: { id: string } }) {
         console.log("Profile successfully edited.", { data });
         submitProfileEdit.mutate(aboutData);
         toast.success("Profile successfully edited");
+        aboutForm.reset();
       },
       onError(error) {
         console.log("Error editing profile", { error });
@@ -216,14 +219,14 @@ export default function UserPage(props: { params: { id: string } }) {
   return (
     <div className="container mx-auto px-2 md:px-4 mt-20 py-10">
       <div className="grid md:grid-cols-12 gap-10">
-        <div className="w-screen md:w-auto md:col-span-4 lg:col-span-3 shadow-lg h-fit md:sticky md:top-10 bg-[#eff0f2] text-black rounded-lg px-6 py-4">
+        <div className="w-screen md:w-auto md:col-span-4 shadow-lg h-fit md:sticky md:top-10 bg-muted text-foreground rounded-lg px-6 py-4">
           <div className="md:w-[143px] w-28 h-28 md:h-[143px] mx-auto mb-5 rounded-full overflow-hidden">
             <Image
               src={user?.imageUrl!}
               alt={user?.fullName!}
               width={500}
               height={500}
-              className={`${styles.img} scale-animation rounded-full`}
+              className={`${styles.img} hover:scale-110 transition duration-300 rounded-full`}
             />
           </div>
           <div className="font-normal py-4 text-left">
