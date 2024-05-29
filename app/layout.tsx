@@ -81,7 +81,6 @@ export default function RootLayout({
       <body className={`${poppins.className} ${chillax.variable}`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
