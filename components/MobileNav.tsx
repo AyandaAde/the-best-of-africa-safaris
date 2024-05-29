@@ -46,7 +46,7 @@ const MobileNav = () => {
                                     Gallery
                                 </Link>
                             <SignedIn>
-                            <Link href={`/main/users/${userId}`} className="font-semibold hover:text-primary">
+                            <Link href={`/main/user/${userId}`} className="font-semibold hover:text-primary">
                                 User Page
                             </Link>
                             </SignedIn>

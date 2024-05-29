@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+
 import { cn } from "@/lib/utils";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,9 +14,10 @@ import {
 import Link from "next/link";
 import { Button } from "./ui/button";
 import DarkModeButton from "./DarkModeButton";
-import Image from "next/image";
+import { forwardRef } from "react";
 
 export default function Navbar({ className }: { className?: string }) {
+  const {userId} = useAuth();
   return (
     <div
       className={cn("fixed top-3 inset-x-0 max-w-2xl mx-auto z-50", className)}
@@ -76,7 +77,7 @@ export default function Navbar({ className }: { className?: string }) {
             </NavigationMenuItem>
             <SignedIn>
             <NavigationMenuItem>
-            <Link href="/main/user-page" legacyBehavior passHref>
+            <Link href={`/main/user/${userId}`} legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   User Page
                 </NavigationMenuLink>
@@ -118,7 +119,7 @@ export default function Navbar({ className }: { className?: string }) {
   );
 }
 
-const ListItem = React.forwardRef<
+const ListItem = forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
