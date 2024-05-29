@@ -256,7 +256,7 @@ export default function UserPage(props: { params: { id: string } }) {
               </Form>
             ) : (
               //* Add user about info here.
-              <p className="text-sm">""</p>
+              <p className="text-sm">&quot;&quot;</p>
             )}
           </div>
           <div className="font-normal text-left">
@@ -281,7 +281,7 @@ export default function UserPage(props: { params: { id: string } }) {
               </TabsList>
               <TabsContent value="bookings" className="w-screen md:w-auto">
                 <Table>
-                  <TableCaption>A lost of your recent bookings.</TableCaption>
+                  <TableCaption>A list of your recent bookings.</TableCaption>
                   <TableHeader>
                     <TableRow>
                       <TableHead>Tour Name</TableHead>
