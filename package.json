@@ -11,6 +11,7 @@
   "dependencies": {
     "@clerk/nextjs": "^5.1.0",
     "@clerk/themes": "^2.1.7",
+    "@googlemaps/markerclusterer": "^2.5.3",
     "@hookform/resolvers": "^3.4.2",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -26,6 +27,7 @@
     "@react-three/fiber": "^8.16.6",
     "@tabler/icons-react": "^3.5.0",
     "@tanstack/react-query": "^5.37.1",
+    "@vis.gl/react-google-maps": "^1.0.1",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "class-variance-authority": "^0.7.0",

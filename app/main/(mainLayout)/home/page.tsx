@@ -117,7 +117,7 @@ export default function HomePage() {
     alt="Border"
     width={1000}
     height={1000}
-    className="relative -bottom-11 w-full h-24 dark:hidden"
+    className="relative -bottom-20 md:-bottom-40 w-full h-16 sm:h-20 md:h-24 dark:hidden"
     />
       </div>
     </div>

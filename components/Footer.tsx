@@ -32,7 +32,7 @@ export default function Footer() {
               <div className="flex-1">
                 <div className="flex items-center py-4">
                   <MapPinIcon />
-                  <p>Arusha Eyasi, Tanzania</p>
+                  <p>Karatu Arusha, Tanzania</p>
                 </div>
                 <div className="flex items-center py-4">
                   <MailIcon />
@@ -40,16 +40,16 @@ export default function Footer() {
                     href="mailto:sonayilodge@gmail.com"
                     className="ml-2 hover:text-primary"
                   >
-                    sonayilodge@gmail.com
+                    info@bestofafricasafaris.co.tz
                   </Link>
                 </div>
                 <div className="flex items-center py-4">
                   <SmartphoneIcon />
                   <Link
-                    href="tel:+255742446107"
+                    href="tel:+255767695030"
                     className="ml-2 hover:text-primary"
                   >
-                    +255742446107
+                    +255767695030
                   </Link>
                 </div>
               </div>
