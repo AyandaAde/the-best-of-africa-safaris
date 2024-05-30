@@ -102,7 +102,7 @@ export default function ToursPage() {
                   alt={project.title}
                   width={500}
                   height={500}
-                  className="w-full h-full object-cover rounded-md"
+                  className="w-full h-full object-cover rounded-md group-hover:scale-110 transition"
                 />
                 <div className="relative w-fit z-10 bottom-20 ml-3">
                   <h2 className="font-semibold text-black text-xl md:text-2xl">

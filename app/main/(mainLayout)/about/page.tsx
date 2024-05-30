@@ -18,7 +18,7 @@ export default function AboutPage() {
 
   const team = [
     {
-        image: "https://demo.artureanec.com/html/wild-world/img/team_1.jpg",
+        image: "/images/mr-bayo.jpeg",
         name: "Modest Bayo",
         title: "Founder and CEO",
     },
@@ -28,7 +28,7 @@ export default function AboutPage() {
         title: "Reservation Manager",
     },
     {
-        image: "https://demo.artureanec.com/html/wild-world/img/team_2.jpg",
+        image: "/images/ayanda.jpeg",
         name: "Ayanda Kinyambo",
         title: "Software Engineer",
     }, 
@@ -193,14 +193,14 @@ export default function AboutPage() {
                 {team.map((member, index) => (
                     <WobbleCard
                     key={index}
-                    containerClassName="w-[250px] md:w-[300px] shadow-md min-h-[300px]"
+                    containerClassName="w-[250px] md:w-[300px] shadow-md min-h-[300px] bg-muted"
                     >
                         <Image
                         src={member.image}
                         alt={member.name}
                         width={500}
                         height={500}
-                        className="mb-5 rounded-2xl"
+                        className="mb-5 rounded-2xl object-cover w-full h-3/4"
                         />
                         <h2 className="font-semibold mx-2">{member.name}</h2>
                         <p className="mx-2">{member.title}</p>

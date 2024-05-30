@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div>
+    <div className="mb-20 md:mb-40">
       <Hero />
       <div className="relative w-full bg-gradient-to-b from-white to-[#F3F5F4] dark:from-black dark:to-black text-black dark:text-white">
       <div className="pt-20 md:pt-40 w-3/4 mx-auto">

@@ -31,7 +31,6 @@ import { Input } from "./ui/input";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
-import { create } from "domain";
 import { Loader2 } from "lucide-react";
 
 type Props = {
@@ -49,13 +48,14 @@ export default function BookTourCta({
 }: Props) {
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(),
-    to: addDays(new Date(), 20),
+    to: addDays(new Date(), 1),
   });
 
   const [adultCount, setAdultCount] = useState(1);
   const [childrenCount, setChildrenCount] = useState(0);
   const [infantCount, setInfantCount] = useState(0);
   const [guests, setGuests] = useState(1);
+  
   const createBooking = useMutation({
     mutationFn: async () => {
       const res = await axios.post("/api/bookings", {
@@ -64,6 +64,7 @@ export default function BookTourCta({
         childrenCount,
         infantCount,
         guests,
+        price,
       });
       return res.data;
     }
@@ -73,6 +74,36 @@ export default function BookTourCta({
   const slug = params;
 
   const discountPrice = price - (price / 100) * discount;
+
+  function handleDateSelect(date: DateRange | undefined){
+    setDate(date);
+    calculateTotalPrice();
+  };
+
+  function calculateTotalPrice(){
+    let totalPrice = 0;
+    let noOfDays = 0;
+
+    if(date?.from && date?.to){
+      noOfDays = (date.to.getTime()) - (date.from.getTime());
+      noOfDays = Math.ceil(noOfDays/(24*60*60*1000));
+    };
+
+    if (discount !== 0){
+      if(noOfDays > 1){
+        totalPrice = discountPrice * noOfDays;
+        return totalPrice;
+      }
+      totalPrice = discountPrice;
+      return totalPrice;
+    }
+    if(noOfDays > 1){
+      totalPrice = price * noOfDays;
+      return totalPrice;
+    }
+    totalPrice = price;
+    return totalPrice;
+  }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -100,7 +131,7 @@ export default function BookTourCta({
             discount !== 0 && "text-muted-foreground"
           } flex flex-col font-bold text-xl`}
         >
-          <p>Price: ${price}</p>
+          <p>Price: ${calculateTotalPrice()}</p>
         </span>
         {discount !== 0 && (
           <span className="text-red-500 font-bold text-xl">
@@ -152,7 +183,7 @@ export default function BookTourCta({
                 mode="range"
                 defaultMonth={date?.from}
                 selected={date}
-                onSelect={setDate}
+                onSelect={handleDateSelect}
                 numberOfMonths={2}
               />
             </PopoverContent>

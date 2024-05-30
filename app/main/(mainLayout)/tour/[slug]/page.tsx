@@ -50,9 +50,10 @@ export default function page() {
       unforgettable adventure that will leave you with breathtaking
       memories and a newfound appreciation for the natural world.`
     },
-  ]
+  ];
+  
   return (
-    <div className="md:pt-28">
+    <div className="mb-10 md:mb-20 md:pt-28">
       <TourGallery />
       <div className="container mx-auto mt-8 md:mt-20">
         <div className="md:grid md:grid-cols-12 gap-10 px-3">
