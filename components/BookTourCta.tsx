@@ -32,6 +32,8 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import {removeAdult, addAdult, removeChild, addChild, removeInfant, addInfant} from "@/app/features/booking/bookingSlice";
 
 type Props = {
   specialNote?: string;
@@ -51,10 +53,10 @@ export default function BookTourCta({
     to: addDays(new Date(), 1),
   });
 
-  const [adultCount, setAdultCount] = useState(1);
-  const [childrenCount, setChildrenCount] = useState(0);
-  const [infantCount, setInfantCount] = useState(0);
-  const [guests, setGuests] = useState(1);
+  const {adultCount, childrenCount, infantCount, guests} = useSelector((store: any)=> store.booking);
+
+  const dispatch = useDispatch();
+  
   
   const createBooking = useMutation({
     mutationFn: async () => {
@@ -246,8 +248,7 @@ export default function BookTourCta({
                   <div className="flex flex-row items-center w-[150px] justify-between">
                     <Button
                       onClick={() => {
-                        if (adultCount >= 2) setAdultCount(adultCount - 1);
-                        setGuests(adultCount - 1 + childrenCount + infantCount);
+                        if (adultCount >= 2) dispatch(removeAdult());
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -257,8 +258,7 @@ export default function BookTourCta({
                     <p>{adultCount}</p>
                     <Button
                       onClick={() => {
-                        setAdultCount(adultCount + 1);
-                        setGuests(adultCount + 1 + childrenCount + infantCount);
+                        dispatch(addAdult())
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -278,9 +278,7 @@ export default function BookTourCta({
                   <div className="flex flex-row items-center w-[150px] justify-between">
                     <Button
                       onClick={() => {
-                        if (childrenCount >= 1)
-                          setChildrenCount(childrenCount - 1);
-                        setGuests(childrenCount - 1 + adultCount + infantCount);
+                        if (childrenCount >= 1) dispatch(removeChild())
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -289,10 +287,7 @@ export default function BookTourCta({
                     </Button>
                     <p>{childrenCount}</p>
                     <Button
-                      onClick={() => {
-                        setChildrenCount(childrenCount + 1);
-                        setGuests(childrenCount + 1 + adultCount + infantCount);
-                      }}
+                      onClick={() => dispatch(addChild())}
                       variant={"outline"}
                       className="rounded-full"
                     >
@@ -311,8 +306,7 @@ export default function BookTourCta({
                   <div className="flex flex-row items-center w-[150px] justify-between">
                     <Button
                       onClick={() => {
-                        if (infantCount >= 1) setInfantCount(infantCount - 1);
-                        setGuests(infantCount - 1 + adultCount + childrenCount);
+                        if (infantCount >= 1) dispatch(removeInfant())
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -321,10 +315,7 @@ export default function BookTourCta({
                     </Button>
                     <p>{infantCount}</p>
                     <Button
-                      onClick={() => {
-                        setInfantCount(infantCount + 1);
-                        setGuests(infantCount + 1 + adultCount + childrenCount);
-                      }}
+                      onClick={() => dispatch(addInfant())}
                       variant={"outline"}
                       className="rounded-full"
                     >

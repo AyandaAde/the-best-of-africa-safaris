@@ -21,6 +21,9 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader } from "./card";
+import { useDispatch, useSelector } from "react-redux";
+import {removeAdult, addAdult, removeChild, addChild, removeInfant, addInfant, clearCount} from "@/app/features/booking/bookingSlice";
+import { setSearchQuery } from "@/app/features/search/searchSlice";
 
 export default function MobileSearchComp({
   placeholders,
@@ -34,11 +37,10 @@ export default function MobileSearchComp({
     to: addDays(new Date(), 20),
   });
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [adultCount, setAdultCount] = useState(1);
-  const [childrenCount, setChildrenCount] = useState(0);
-  const [infantCount, setInfantCount] = useState(0);
-  const [guests, setGuests] = useState(0);
+
+  const {adultCount, childrenCount, infantCount, guests} = useSelector((store:any)=>store.booking);
+  const {searchQuery} = useSelector((store:any)=>store.search);
+  const dispatch = useDispatch();
 
   const search = useMutation({
     mutationFn: async () => {
@@ -215,10 +217,7 @@ export default function MobileSearchComp({
         });
     } else if(!date)  toast.error("Please select a date.");
     else if(guests === 0)  toast.error("Please select number of guests.");
-    setGuests(0);
-    setAdultCount(1);
-    setChildrenCount(0);
-    setInfantCount(0);
+    dispatch(clearCount());
   };
   return (
     <form
@@ -285,7 +284,7 @@ export default function MobileSearchComp({
       </div>
       </div>
       </div>
-      <Card className="mb-4 flex flex-col rounded-full items-center p-2 w-[260px] mx-auto h-16 dark:bg-card">
+      <Card className="mb-4 flex flex-col rounded-full items-center p-2 w-[260px] h-16 dark:bg-card">
         <Label htmlFor="date">
           When
         </Label>
@@ -360,10 +359,7 @@ export default function MobileSearchComp({
                   <div className="flex flex-row items-center w-[100px] justify-between">
                     <Button
                       onClick={() => {
-                        if (adultCount >= 2){
-                            setAdultCount(adultCount - 1);
-                        setGuests(adultCount - 1 + childrenCount + infantCount);
-                        };
+                        if (adultCount >= 2) dispatch(removeAdult());
                       }}
                       type="button"
                       variant={"outline"}
@@ -373,10 +369,7 @@ export default function MobileSearchComp({
                     </Button>
                     <p>{adultCount}</p>
                     <Button
-                      onClick={() => {
-                        setAdultCount(adultCount + 1);
-                        setGuests(adultCount + 1 + childrenCount + infantCount);
-                      }}
+                      onClick={() => dispatch(addAdult())}
                       type="button"
                       variant={"outline"}
                       className="rounded-full w-8 h-8"
@@ -396,10 +389,7 @@ export default function MobileSearchComp({
                   <div className="flex flex-row items-center w-[100px] justify-between">
                     <Button
                       onClick={() => {
-                        if (childrenCount >= 1){
-                          setChildrenCount(childrenCount - 1);
-                        setGuests(childrenCount - 1 + adultCount + infantCount);
-                        };
+                        if (childrenCount >= 1) dispatch(removeChild());
                       }}
                       type="button"
                       variant={"outline"}
@@ -409,10 +399,7 @@ export default function MobileSearchComp({
                     </Button>
                     <p>{childrenCount}</p>
                     <Button
-                      onClick={() => {
-                        setChildrenCount(childrenCount + 1);
-                        setGuests(childrenCount + 1 + adultCount + infantCount);
-                      }}
+                      onClick={() => dispatch(addChild())}
                       type="button"
                       variant={"outline"}
                       className="rounded-full w-8 h-8"
@@ -432,10 +419,7 @@ export default function MobileSearchComp({
                   <div className="flex flex-row items-center w-[100px] justify-between">
                     <Button
                       onClick={() => {
-                        if (infantCount >= 1) {
-                            setInfantCount(infantCount - 1);
-                        setGuests(infantCount - 1 + adultCount + childrenCount);
-                        };
+                        if (infantCount >= 1) dispatch(removeInfant());
                       }}
                       type="button"
                       variant={"outline"}
@@ -445,10 +429,7 @@ export default function MobileSearchComp({
                     </Button>
                     <p>{infantCount}</p>
                     <Button
-                      onClick={() => {
-                        setInfantCount(infantCount + 1);
-                        setGuests(infantCount + 1 + adultCount + childrenCount);
-                      }}
+                      onClick={() => dispatch(addInfant())}
                       type="button"
                       variant={"outline"}
                       className="rounded-full w-8 h-8"

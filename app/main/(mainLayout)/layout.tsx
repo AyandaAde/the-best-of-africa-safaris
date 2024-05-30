@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import MobileNav from "@/components/MobileNav";
 import QueryProvider from "@/components/query-providet";
 import { Toaster } from "sonner";
+import CustomerSupportWidget from "@/components/CustomerSupportWidget";
+import ReduxProvider from "@/components/redux-provider";
 
 const chillax = localFont({
   src: "../../../public/fonts/Chillax-Variable.ttf",
@@ -33,13 +35,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} ${chillax.variable}`}>
+      <ReduxProvider>
         <QueryProvider>
           <Navbar className="hidden md:block" />
           <MobileNav />
           {children}
           <Toaster richColors/>
+          <CustomerSupportWidget/>
           <Footer />
         </QueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

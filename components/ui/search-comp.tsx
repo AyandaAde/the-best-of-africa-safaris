@@ -20,6 +20,19 @@ import { Separator } from "./separator";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  removeAdult,
+  addAdult,
+  removeChild,
+  addChild,
+  removeInfant,
+  addInfant,
+  clearCount,
+} from "@/app/features/booking/bookingSlice";
+import {
+  setSearchQuery,
+} from "@/app/features/search/searchSlice";
 
 export default function SearchComp({
   placeholders,
@@ -32,30 +45,32 @@ export default function SearchComp({
     from: new Date(),
     to: addDays(new Date(), 20),
   });
+  const { adultCount, childrenCount, infantCount, guests } = useSelector(
+    (store: any) => store.booking
+  );
+  const { searchQuery } = useSelector(
+    (store: any) => store.search
+  );
+  const dispatch = useDispatch();
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [adultCount, setAdultCount] = useState(1);
-  const [childrenCount, setChildrenCount] = useState(0);
-  const [infantCount, setInfantCount] = useState(0);
-  const [guests, setGuests] = useState(1);
 
   const search = useMutation({
     mutationFn: async () => {
-        const startDate = date?.from;
-        const endDate = date?.to;
-        console.log(startDate, endDate);
-        const resp = await axios.post("/api/search",{
-            searchQuery,
-            adultCount,
-            childrenCount,
-            infantCount,
-            guests,
-            startDate,
-            endDate,
-        });
+      const startDate = date?.from;
+      const endDate = date?.to;
+      console.log(startDate, endDate);
+      const resp = await axios.post("/api/search", {
+        searchQuery,
+        adultCount,
+        childrenCount,
+        infantCount,
+        guests,
+        startDate,
+        endDate,
+      });
 
-        console.log(resp.data);
-        return resp.data;
+      console.log(resp.data);
+      return resp.data;
     },
   });
 
@@ -63,7 +78,7 @@ export default function SearchComp({
     let interval: any;
     const startAnimation = () => {
       interval = setInterval(() => {
-        setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
+        setCurrentPlaceholder((prev: any) => (prev + 1) % placeholders.length);
       }, 1500);
     };
     startAnimation();
@@ -200,26 +215,23 @@ export default function SearchComp({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     vanishAndSubmit();
-    if(date && guests){
+    if (date && guests) {
       search.mutate(undefined, {
-          onSuccess: (data) => {
-              console.log("new search query created", {data});
-              search.mutate();
-              toast.success("Search query successfully created");
-          },
-          onError: (error) => {
-              console.log("search query error", {error});
-              toast.error("Error creating search query. Please try again.");
-          }
+        onSuccess: (data) => {
+          console.log("new search query created", { data });
+          search.mutate();
+          toast.success("Search query successfully created");
+        },
+        onError: (error) => {
+          console.log("search query error", { error });
+          toast.error("Error creating search query. Please try again.");
+        },
       });
-  } else if(!date)  toast.error("Please select a date.");
-  else if(guests === 0)  toast.error("Please select number of guests.");
-  setGuests(0);
-  setAdultCount(1);
-  setChildrenCount(0);
-  setInfantCount(0);
+    } else if (!date) toast.error("Please select a date.");
+    else if (guests === 0) toast.error("Please select number of guests.");
+    dispatch(clearCount());
   };
-  
+
   return (
     <form
       className={cn(
@@ -243,7 +255,7 @@ export default function SearchComp({
           onChange={(e) => {
             if (!animating) {
               setValue(e.target.value);
-              setSearchQuery(e.target.value);
+              dispatch(setSearchQuery(e.target.value));
             }
           }}
           onKeyDown={handleKeyDown}
@@ -337,8 +349,7 @@ export default function SearchComp({
                   <div className="flex flex-row items-center w-[150px] justify-between">
                     <Button
                       onClick={() => {
-                        if (adultCount >= 2) setAdultCount(adultCount - 1);
-                        setGuests(adultCount - 1 + childrenCount + infantCount);
+                        if (adultCount >= 2) dispatch(removeAdult());
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -347,10 +358,7 @@ export default function SearchComp({
                     </Button>
                     <p>{adultCount}</p>
                     <Button
-                      onClick={() => {
-                        setAdultCount(adultCount + 1);
-                        setGuests(adultCount + 1 + childrenCount + infantCount);
-                      }}
+                      onClick={() => dispatch(addAdult())}
                       variant={"outline"}
                       className="rounded-full"
                     >
@@ -369,9 +377,7 @@ export default function SearchComp({
                   <div className="flex flex-row items-center w-[150px] justify-between">
                     <Button
                       onClick={() => {
-                        if (childrenCount >= 1)
-                          setChildrenCount(childrenCount - 1);
-                        setGuests(childrenCount - 1 + adultCount + infantCount);
+                        if (childrenCount >= 1) dispatch(removeChild());
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -380,10 +386,7 @@ export default function SearchComp({
                     </Button>
                     <p>{childrenCount}</p>
                     <Button
-                      onClick={() => {
-                        setChildrenCount(childrenCount + 1);
-                        setGuests(childrenCount + 1 + adultCount + infantCount);
-                      }}
+                      onClick={() => dispatch(addChild())}
                       variant={"outline"}
                       className="rounded-full"
                     >
@@ -402,8 +405,7 @@ export default function SearchComp({
                   <div className="flex flex-row items-center w-[150px] justify-between">
                     <Button
                       onClick={() => {
-                        if (infantCount >= 1) setInfantCount(infantCount - 1);
-                        setGuests(infantCount - 1 + adultCount + childrenCount);
+                        if (infantCount >= 1) dispatch(removeInfant());
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -412,10 +414,7 @@ export default function SearchComp({
                     </Button>
                     <p>{infantCount}</p>
                     <Button
-                      onClick={() => {
-                        setInfantCount(infantCount + 1);
-                        setGuests(infantCount + 1 + adultCount + childrenCount);
-                      }}
+                      onClick={() => dispatch(addInfant())}
                       variant={"outline"}
                       className="rounded-full"
                     >
@@ -432,13 +431,11 @@ export default function SearchComp({
           variant="default"
           className="rounded-full w-12 h-12"
         >
-            {
-                search.isPending ? (
-                    <Loader2 className="animate-spin w-10 h-10"/>
-                ) : (
-                    <SearchIcon />
-                )
-            }
+          {search.isPending ? (
+            <Loader2 className="animate-spin w-10 h-10" />
+          ) : (
+            <SearchIcon />
+          )}
         </Button>
       </div>
 
