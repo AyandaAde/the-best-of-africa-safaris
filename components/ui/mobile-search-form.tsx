@@ -446,7 +446,7 @@ export default function MobileSearchComp({
       <Button
           type="submit"
           variant="default"
-          className="rounded-full mt-4 w-12 h-12"
+          className="rounded-full mt-2 w-12 h-12"
         >
             {
                 search.isPending ? (
