@@ -147,4 +147,8 @@ import {
   
     return null;
   });
+
+  Circle.displayName = 'Circle';
+
+  export default Circle;
   

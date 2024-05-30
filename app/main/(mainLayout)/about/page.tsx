@@ -25,7 +25,7 @@ import React, {
 } from "react";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import type { Marker } from "@googlemaps/markerclusterer";
-import { Circle } from "@/components/Circle";
+import Circle  from "@/components/Circle";
 
 type Poi = { key: string; location: google.maps.LatLngLiteral };
 const locations: Poi[] = [
