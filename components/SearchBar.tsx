@@ -44,7 +44,7 @@ export default function SearchBar() {
                 </div>
               </Button>
             </SheetTrigger>
-            <SheetContent side={"top"} className="pt-20 h-screen w-screen overflow-x-hidden overflow-y-scroll">
+            <SheetContent side={"top"} className="pt-12 h-screen w-screen overflow-x-hidden overflow-y-scroll">
               <SheetHeader>
                 <SheetTitle className="text-center">Which tour would you like to take today?</SheetTitle>
               </SheetHeader>
