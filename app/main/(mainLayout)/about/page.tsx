@@ -262,17 +262,6 @@ export default function AboutPage() {
           >
              <PoiMarkers pois={locations} />
           </Map>
-          {/* <Map
-      defaultZoom={13}
-      defaultCenter={{ lat: -3.3345204832347455, lng: 35.65227458184215 }}
-      onCameraChanged={ (ev: MapCameraChangedEvent) =>
-        console.log('camera changed:', ev.detail.center, 'zoom:', ev.detail.zoom)
-      }
-      mapId='da37f3254c6a6d1c'
-      className="w-3/4 h-[75vh] rounded-md"
-      >
-    <PoiMarkers pois={locations} />
-    </Map> */}
         </APIProvider>
       </div>
     </div>

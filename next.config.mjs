@@ -20,6 +20,9 @@ const nextConfig = {
             {
                 hostname: "img.clerk.com",
             },
+            {
+                hostname: "the-best-of-africa-safaris.s3.us-east-2.amazonaws.com",
+            }
         ],
     },
     typescript: {

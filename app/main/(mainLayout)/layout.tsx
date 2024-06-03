@@ -35,15 +35,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} ${chillax.variable}`}>
-      <ReduxProvider>
-        <QueryProvider>
-          <Navbar className="hidden md:block" />
-          <MobileNav />
-          {children}
-          <Toaster richColors/>
-          <CustomerSupportWidget/>
-          <Footer />
-        </QueryProvider>
+        <ReduxProvider>
+          <QueryProvider>
+            <Navbar className="hidden md:block" />
+            <MobileNav />
+            {children}
+            <Toaster richColors />
+            <CustomerSupportWidget />
+            <Footer />
+          </QueryProvider>
         </ReduxProvider>
       </body>
     </html>

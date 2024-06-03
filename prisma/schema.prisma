@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type ToursActivities {
+  icon String
+  name String
+}
+
+type ToursDescription {
+  heading String
+  text    String
+}
+
+model Tour {
+  id          String             @id @default(auto()) @map("_id") @db.ObjectId
+  activities  ToursActivities[]
+  description ToursDescription[]
+  imageUrl    String
+  images      String[]
+  link        String?
+  name        String
+  price       Int
+  slug        String
+
+  @@map("tours")
+}

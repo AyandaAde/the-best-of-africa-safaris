@@ -44,7 +44,6 @@ import {
   LinearScale,
   BarElement,
 } from "chart.js";
-import { ButtonsCard } from "@/components/ui/tailwindcss-button";
 
 ChartJS.register(Tooltip, CategoryScale, LinearScale, BarElement);
 
