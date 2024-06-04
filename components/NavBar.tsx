@@ -15,8 +15,13 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import DarkModeButton from "./DarkModeButton";
 import { forwardRef } from "react";
+import { Tours } from "@/lib/types";
 
-export default function Navbar({ className }: { className?: string }) {
+interface Props {
+  tours: Tours[];
+  className?: string;
+}
+export default function Navbar({ className, tours }: Props) {
   const {userId} = useAuth();
   return (
     <div
@@ -47,24 +52,15 @@ export default function Navbar({ className }: { className?: string }) {
                 </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
-                  <ListItem href="/docs" title="Introduction">
-                    Re-usable components built using Radix UI and Tailwind CSS.
-                  </ListItem>
-                  <ListItem href="/docs/installation" title="Installation">
-                    How to install dependencies and structure your app.
-                  </ListItem>
-                  <ListItem
-                    href="/docs/primitives/typography"
-                    title="Typography"
-                  >
-                    Styles for headings, paragraphs, lists...etc
-                  </ListItem>
-                  <ListItem
-                    href="/docs/primitives/typography"
-                    title="Typography"
-                  >
-                    Styles for headings, paragraphs, lists...etc
-                  </ListItem>
+                  {tours.map((tour)=>(
+                    <ListItem
+                    key={tour.id}
+                    href={`/main/tour/${tour.slug}`}
+                    title={tour.name}
+                    >
+                      {tour.description[0].text.slice(0,100)}
+                    </ListItem>
+                  ))}
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>

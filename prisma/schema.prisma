@@ -27,6 +27,58 @@ model Tour {
   name        String
   price       Int
   slug        String
+  Booking     Booking[]
+  Review      Review[]
 
   @@map("tours")
+}
+
+model Booking {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  tourId    String   @db.ObjectId
+  userId    String   @db.ObjectId
+  userName  String?
+  tourName  String?
+  guests    Int
+  adults    Int?
+  children  Int?
+  infants   Int?
+  noOfDays  Int
+  discount  Int?
+  startDate String
+  endDate String
+  price     Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tour      Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("bookings")
+}
+
+model User {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String    @unique
+  fName   String?
+  lName   String?
+  email   String?
+  image   String?
+  Booking Booking[]
+  Review  Review[]
+
+  @@map("users")
+}
+
+model Review {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  tourId    String   @db.ObjectId
+  userId    String   @db.ObjectId
+  rating    Int
+  review    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tour      Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("review")
 }

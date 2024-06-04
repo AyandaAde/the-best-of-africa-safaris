@@ -1,22 +1,10 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 import { Separator } from "./ui/separator";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "./ui/form";
-import { z } from "zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
 import { DateRange } from "react-day-picker";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -34,11 +22,15 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import {removeAdult, addAdult, removeChild, addChild, removeInfant, addInfant} from "@/app/features/booking/bookingSlice";
+import { useUser } from "@clerk/nextjs";
 
 type Props = {
   specialNote?: string;
   price: number;
   discount: number;
+  tourId: string;
+  userId: string;
+  tourName: string;
   className?: React.HTMLAttributes<HTMLDivElement>;
 };
 
@@ -46,12 +38,18 @@ export default function BookTourCta({
   specialNote,
   price,
   discount,
+  tourId,
+  userId,
+  tourName,
   className,
 }: Props) {
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(),
     to: addDays(new Date(), 1),
   });
+  const [noOfDays, setNoOfDays] = useState(0);
+  const [bookingPrice, setBookingPrice] = useState(price);
+  const {user} = useUser();
 
   const {adultCount, childrenCount, infantCount, guests} = useSelector((store: any)=> store.booking);
 
@@ -60,13 +58,22 @@ export default function BookTourCta({
   
   const createBooking = useMutation({
     mutationFn: async () => {
+      const startDate = date?.from?.toString();
+      const endDate = date?.to ?  date?.to?.toString() : date?.from?.toString();
+
       const res = await axios.post("/api/bookings", {
-        date,
+        startDate: startDate?.slice(0,15),
+        endDate: endDate?.slice(0,15),
+        discount,
         adultCount,
         childrenCount,
         infantCount,
         guests,
-        price,
+        noOfDays,
+        bookingPrice,
+        tourId,
+        userId,
+        tourName,
       });
       return res.data;
     }
@@ -82,14 +89,21 @@ export default function BookTourCta({
     calculateTotalPrice();
   };
 
-  function calculateTotalPrice(){
-    let totalPrice = 0;
+  function calculateNoOfDays(){
     let noOfDays = 0;
 
     if(date?.from && date?.to){
       noOfDays = (date.to.getTime()) - (date.from.getTime());
       noOfDays = Math.ceil(noOfDays/(24*60*60*1000));
     };
+
+    return noOfDays;
+  };
+
+
+  function calculateTotalPrice(){
+    let totalPrice = 0;
+    let noOfDays = calculateNoOfDays();
 
     if (discount !== 0){
       if(noOfDays > 1){
@@ -109,13 +123,17 @@ export default function BookTourCta({
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    let noOfDays = calculateNoOfDays();
+    let bookingPrice = calculateTotalPrice();
+    setNoOfDays(noOfDays);
+    setBookingPrice(bookingPrice);
     if(!date){
       toast.error("Please select a date");
       return;
     }
     createBooking.mutate(undefined, {
-      onSuccess: ({booking}) => {
-        console.log("Booking successfully created", {booking}),
+      onSuccess: ({message}) => {
+        console.log("Booking successfully created", {message}),
         createBooking.mutate();
         toast.success("Booking successfully created");
       },
@@ -197,21 +215,21 @@ export default function BookTourCta({
         <Label htmlFor="first Name" className="text-base">
           First Name
         </Label>
-        <Input required placeholder="Jack" />
+        <Input required defaultValue={user?.firstName || ""} />
         <p className="text-xs text-muted-foreground mb-2">
           Please type in your first name
         </p>
         <Label htmlFor="last Name" className="text-base">
           Last Name
         </Label>
-        <Input required placeholder="Giacometti" />
+        <Input required defaultValue={user?.lastName || ""} />
         <p className="text-xs text-muted-foreground mb-2">
           Please type in your last name
         </p>
         <Label htmlFor="last Name" className="text-base">
           Email
         </Label>
-        <Input required placeholder="jgiacometti@email.com" />
+        <Input required defaultValue={user?.emailAddresses[0].emailAddress || ""} />
         <p className="text-xs text-muted-foreground mb-2">
           Please type in your email
         </p>

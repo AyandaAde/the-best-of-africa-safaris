@@ -3,12 +3,30 @@ import ReviewComp from "@/components/ReviewComp";
 import TourGallery from "@/components/TourGallery";
 import { Separator } from "@/components/ui/separator";
 import { prisma } from "@/lib/db/prisma";
+import {currentUser } from "@clerk/nextjs/server";
 
 export default async function Tour({params}: {params: {slug: string}}) {
+  const user = await currentUser();
+
+  const {id, firstName, lastName, imageUrl, emailAddresses} = user!;
+
     const slug = params.slug;
 
+    const dbUser = await prisma.user.findUnique({where: {userId: id}});
+    if(!dbUser){
+      await prisma.user.create({
+        data: {
+          userId: id,
+          fName: firstName,
+          lName: lastName,
+          email: emailAddresses[0].emailAddress,
+          image: imageUrl,
+        }
+      })
+    }
+
   const tour = await prisma.tour.findFirst({where: {slug}});
-  
+
   return (
     <div className="mb-10 md:mb-20 md:pt-28">
       <TourGallery images={tour?.images!} />
@@ -72,7 +90,7 @@ export default async function Tour({params}: {params: {slug: string}}) {
             </div>
           </div>
           <div className="mt-5 md:mt-0 md:col-span-5 rounded-xl shadow-xl dark:shadow dark:shadow-white sticky top-32 h-fit overflow-auto">
-              <BookTourCta discount={10} price={500}/>
+              <BookTourCta discount={10} price={500} tourId={tour?.id!} userId={id!} tourName={tour?.name!}/>
             </div>
         </div>
       </div>
