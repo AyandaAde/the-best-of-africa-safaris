@@ -1,7 +1,16 @@
 import Image from "next/image";
 import { InfiniteMovingCards } from "./ui/infinite-moving-cards";
+import { prisma } from "@/lib/db/prisma";
 
-export default function Testimonials() {
+export default async function Testimonials() {
+
+  const testimonials = await prisma.review.findMany({
+    include:{
+      user: true,
+      tour: true,
+    },
+  });
+
   return (
     <div className="relative flex flex-col justify-center items-center w-screen gap-3 font-chillax">
     <h3 className="text-black/60 dark:text-white/60 text-base">TESTIMONIALS</h3>

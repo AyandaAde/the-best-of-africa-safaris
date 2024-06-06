@@ -6,18 +6,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import SearchComp from "./ui/search-comp";
 import MobileSearchComp from "./ui/mobile-search-form";
+import { DateRange } from "react-day-picker";
 
-export default function SearchBar() {
+type Props = {
+  isPending: boolean;
+  date: DateRange | undefined;
+  setDate: (value: DateRange | undefined) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+export default function SearchBar({onSubmit, isPending, setDate, date}: Props) {
   const placeholders = [
     "Serengeti",
     "Ngorongoro Crater",
@@ -27,7 +31,7 @@ export default function SearchBar() {
 
   return (
     <div className="w-fit flex flex-row items-center bg-card dark:bg-zinc-800 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] mx-auto rounded-full">
-      <SearchComp placeholders={placeholders} />
+      <SearchComp placeholders={placeholders} onSubmit={onSubmit} isPending={isPending} setDate={setDate} date={date} />
       <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
@@ -51,7 +55,6 @@ export default function SearchBar() {
               <MobileSearchComp placeholders={placeholders}/>
             </SheetContent>
           </Sheet>
-
       </div>
     </div>
   );

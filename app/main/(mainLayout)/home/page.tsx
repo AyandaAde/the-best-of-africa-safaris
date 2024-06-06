@@ -1,11 +1,30 @@
 import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
 import { Button } from "@/components/ui/button";
-import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import { prisma } from "@/lib/db/prisma";
+import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const user = await currentUser();
+  
+
+  const {id, firstName, lastName, imageUrl, emailAddresses} = user!;
+
+  const dbUser = await prisma.user.findUnique({where: {userId: id}});
+    if(!dbUser){
+      await prisma.user.create({
+        data: {
+          userId: id,
+          fName: firstName,
+          lName: lastName,
+          email: emailAddresses[0].emailAddress,
+          image: imageUrl,
+        }
+      })
+    }
+
   return (
     <div className="mb-20 md:mb-40">
       <Hero />

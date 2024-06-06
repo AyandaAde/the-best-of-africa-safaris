@@ -1,37 +1,11 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { ImagesSlider } from "@/components/ui/images-slider";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { StickyScroll } from "@/components/ui/sticky-scroll-revewal";
 import { WobbleCard } from "@/components/ui/wobble-card";
 import Testimonials from "@/components/Testimonials";
+import MapComp from "@/components/MapComp";
+import ImageSlider from "@/components/ImageSlider";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  APIProvider,
-  Map,
-  useMap,
-  AdvancedMarker,
-  MapCameraChangedEvent,
-  Pin,
-} from "@vis.gl/react-google-maps";
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  useMemo,
-} from "react";
-import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import type { Marker } from "@googlemaps/markerclusterer";
-import Circle  from "@/components/Circle";
-
-type Poi = { key: string; location: google.maps.LatLngLiteral };
-const locations: Poi[] = [
-  { key: "operaHouse", location: { lat: -3.3345204832347455, lng: 35.65227458184215 }},
-
-];
 
 export default function AboutPage() {
   const images = [
@@ -177,33 +151,16 @@ export default function AboutPage() {
 
   return (
     <div className="mb-20 md:mb-40">
-      <ImagesSlider className="h-[40rem]" images={images}>
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: -80,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.6,
-          }}
-          className="z-50 flex flex-col justify-center items-center"
-        >
-          <motion.p className="font-bold text-xl md:text-4xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
-            Crafting unforgettable journeys into the soul of <br /> Africa with
-            the Best of Africa Safaris.
-          </motion.p>
-          <Button className="px-4 py-2 backdrop-blur-sm border bg-emerald-300/10 border-emerald-500/20 text-white mx-auto text-center rounded-full relative mt-4">
-            <Link href="/main/tours" className="w-full">
-              Book a Tour Now →
-            </Link>
-            <div className="absolute inset-x-0 h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-[#024034] to-transparent" />
-          </Button>
-        </motion.div>
-      </ImagesSlider>
+      <ImageSlider
+        images={images}
+        textp1={"Crafting unforgettable journeys into the soul of Africa"}
+        textp2={"with the Best of Africa Safaris."}
+      >
+        <Button className="px-4 py-2 backdrop-blur-sm border bg-emerald-300/10 border-emerald-500/20 text-white mx-auto text-center rounded-full relative mt-4">
+          <Link href={"/main/tours"} className="w-full">Book a tour now →</Link>
+          <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
+        </Button>
+      </ImageSlider>
       <div className="p-10">
         <StickyScroll content={content} />
       </div>
@@ -242,101 +199,8 @@ export default function AboutPage() {
         <h3 className="text-black/60 dark:text-white/60 text-base uppercase">
           Where to find us.
         </h3>
-        <APIProvider
-          apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
-          onLoad={() => console.log("Maps API has loaded.")}
-        >
-          <Map
-            defaultZoom={13}
-            defaultCenter={{ lat: -3.3345204832347455, lng: 35.65227458184215 }}
-            onCameraChanged={(ev: MapCameraChangedEvent) =>
-              console.log(
-                "camera changed:",
-                ev.detail.center,
-                "zoom:",
-                ev.detail.zoom
-              )
-            }
-            mapId='da37f3254c6a6d1c'
-            className="w-3/4 h-[75vh] rounded-md"
-          >
-             <PoiMarkers pois={locations} />
-          </Map>
-        </APIProvider>
+        <MapComp />
       </div>
     </div>
   );
 }
-
-const PoiMarkers = (props: { pois: Poi[] }) => {
-  const map = useMap();
-  const [markers, setMarkers] = useState<{ [key: string]: Marker }>({});
-  const clusterer = useRef<MarkerClusterer | null>(null);
-  const [circleCenter, setCircleCenter] = useState<google.maps.LatLng | null>(
-    null
-  );
-  const handleClick = useCallback((ev: google.maps.MapMouseEvent) => {
-    if (!map) return;
-    if (!ev.latLng) return;
-    console.log("marker clicked: ", ev.latLng.toString());
-    map.panTo(ev.latLng);
-    setCircleCenter(ev.latLng);
-  }, []);
-  // Initialize MarkerClusterer, if the map has changed
-  useEffect(() => {
-    if (!map) return;
-    if (!clusterer.current) {
-      clusterer.current = new MarkerClusterer({ map });
-    }
-  }, [map]);
-
-  // Update markers, if the markers array has changed
-  useEffect(() => {
-    clusterer.current?.clearMarkers();
-    clusterer.current?.addMarkers(Object.values(markers));
-  }, [markers]);
-
-  const setMarkerRef = (marker: Marker | null, key: string) => {
-    if (marker && markers[key]) return;
-    if (!marker && !markers[key]) return;
-
-    setMarkers((prev) => {
-      if (marker) {
-        return { ...prev, [key]: marker };
-      } else {
-        const newMarkers = { ...prev };
-        delete newMarkers[key];
-        return newMarkers;
-      }
-    });
-  };
-
-  return (
-    <>
-      <Circle
-        radius={800}
-        center={circleCenter}
-        strokeColor={"#0c4cb3"}
-        strokeOpacity={1}
-        strokeWeight={3}
-        fillColor={"#3b82f6"}
-        fillOpacity={0.3}
-      />
-      {props.pois.map((poi: Poi) => (
-        <AdvancedMarker
-          key={poi.key}
-          position={poi.location}
-          ref={(marker) => setMarkerRef(marker, poi.key)}
-          clickable={true}
-          onClick={handleClick}
-        >
-          <Pin
-            background={"#2F7339"}
-            glyphColor={"#000"}
-            borderColor={"#000"}
-          />
-        </AdvancedMarker>
-      ))}
-    </>
-  );
-};

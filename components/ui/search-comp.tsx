@@ -17,9 +17,6 @@ import {
 import { Label } from "./label";
 import { Loader2, SearchIcon } from "lucide-react";
 import { Separator } from "./separator";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeAdult,
@@ -28,7 +25,6 @@ import {
   addChild,
   removeInfant,
   addInfant,
-  clearCount,
 } from "@/app/features/booking/bookingSlice";
 import {
   setSearchQuery,
@@ -36,43 +32,24 @@ import {
 
 export default function SearchComp({
   placeholders,
+  onSubmit,
+  isPending,
+  date,
+  setDate,
   className,
 }: {
   placeholders: string[];
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  isPending: boolean;
+  date: DateRange | undefined;
+  setDate: (value: DateRange | undefined) => void;
   className?: React.HTMLAttributes<HTMLDivElement>;
 }) {
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: addDays(new Date(), 20),
-  });
   const { adultCount, childrenCount, infantCount, guests } = useSelector(
     (store: any) => store.booking
   );
-  const { searchQuery } = useSelector(
-    (store: any) => store.search
-  );
   const dispatch = useDispatch();
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
-
-  const search = useMutation({
-    mutationFn: async () => {
-      const startDate = date?.from;
-      const endDate = date?.to;
-      console.log(startDate, endDate);
-      const resp = await axios.post("/api/search", {
-        searchQuery,
-        adultCount,
-        childrenCount,
-        infantCount,
-        guests,
-        startDate,
-        endDate,
-      });
-
-      console.log(resp.data);
-      return resp.data;
-    },
-  });
 
   useEffect(() => {
     let interval: any;
@@ -215,21 +192,7 @@ export default function SearchComp({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     vanishAndSubmit();
-    if (date && guests) {
-      search.mutate(undefined, {
-        onSuccess: (data) => {
-          console.log("new search query created", { data });
-          search.mutate();
-          toast.success("Search query successfully created");
-        },
-        onError: (error) => {
-          console.log("search query error", { error });
-          toast.error("Error creating search query. Please try again.");
-        },
-      });
-    } else if (!date) toast.error("Please select a date.");
-    else if (guests === 0) toast.error("Please select number of guests.");
-    dispatch(clearCount());
+    onSubmit && onSubmit(e);
   };
 
   return (
@@ -431,7 +394,7 @@ export default function SearchComp({
           variant="default"
           className="rounded-full w-12 h-12"
         >
-          {search.isPending ? (
+          {isPending ? (
             <Loader2 className="animate-spin w-10 h-10" />
           ) : (
             <SearchIcon />

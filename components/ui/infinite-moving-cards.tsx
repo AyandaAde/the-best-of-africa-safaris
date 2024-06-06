@@ -1,6 +1,9 @@
 "use client";
 
+import { Review } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { StarFilledIcon } from "@radix-ui/react-icons";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 export const InfiniteMovingCards = ({
@@ -10,11 +13,7 @@ export const InfiniteMovingCards = ({
   pauseOnHover = true,
   className,
 }: {
-  items: {
-    quote: string;
-    name: string;
-    title: string;
-  }[];
+  items: Review[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
   pauseOnHover?: boolean;
@@ -92,23 +91,41 @@ export const InfiniteMovingCards = ({
               background:
                 "linear-gradient(180deg, var(--green-900), var(--green-950)",
             }}
-            key={item.name}
+            key={item.id}
           >
             <blockquote>
               <div
                 aria-hidden="true"
                 className="user-select-none -z-1 pointer-events-none absolute -left-0.5 -top-0.5 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"
-              ></div>
+              />
+              <div className="flex gap-2 items-center mb-2">
+                <Image
+                src={item.user.image!}
+                alt={item.user.fName!}
+                width={50}
+                height={50}
+                className="rounded-full"
+                />
+              <div className="my-1 md:my-0 flex items-center">
+                {Array.from({ length: item.rating }).map((_, index) => (
+                  <StarFilledIcon
+                    key={index}
+                    color={"orange"}
+                    className="w-5 h-5 md:w-6 md:h-6"
+                  />
+                ))}
+              </div>
+              </div>
               <span className=" relative z-20 text-sm sm:text-base sm:leading-[1.6] text-gray-100 font-normal">
-                {item.quote}
+                {item.review}
               </span>
               <div className="relative z-20 mt-6 flex flex-row items-center">
                 <span className="flex flex-col gap-1">
                   <span className="text-sm sm:text-base sm:leading-[1.6] text-gray-400 font-normal">
-                    {item.name}
+                    {item.user.fName} {item.user.lName}
                   </span>
                   <span className="text-sm sm:text-base sm:leading-[1.6] text-gray-400 font-normal">
-                    {item.title}
+                    Tour: {item.tour.name}
                   </span>
                 </span>
               </div>

@@ -46,12 +46,13 @@ model Booking {
   noOfDays  Int
   discount  Int?
   startDate String
-  endDate String
+  endDate   String
   price     Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   tour      Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Review    Review[]
 
   @@map("bookings")
 }
@@ -63,6 +64,7 @@ model User {
   lName   String?
   email   String?
   image   String?
+  about   String?
   Booking Booking[]
   Review  Review[]
 
@@ -72,13 +74,15 @@ model User {
 model Review {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   tourId    String   @db.ObjectId
+  bookingId String   @db.ObjectId
   userId    String   @db.ObjectId
   rating    Int
   review    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   tour      Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("review")
+  @@map("reviews")
 }

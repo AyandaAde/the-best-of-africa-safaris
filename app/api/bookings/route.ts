@@ -2,7 +2,6 @@ import { prisma } from "@/lib/db/prisma";
 import { NextResponse } from "next/server";
 import FormData from "form-data";
 import Mailgun from "mailgun.js";
-import { sub } from "date-fns";
 
 const mailgun = new Mailgun(FormData);
 const DOMAIN = process.env.NEXT_PUBLIC_MAILGUN_DOMAIN!;

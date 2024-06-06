@@ -8,24 +8,17 @@ import {currentUser } from "@clerk/nextjs/server";
 export default async function Tour({params}: {params: {slug: string}}) {
   const user = await currentUser();
 
-  const {id, firstName, lastName, imageUrl, emailAddresses} = user!;
+  const {id} = user!;
 
     const slug = params.slug;
 
-    const dbUser = await prisma.user.findUnique({where: {userId: id}});
-    if(!dbUser){
-      await prisma.user.create({
-        data: {
-          userId: id,
-          fName: firstName,
-          lName: lastName,
-          email: emailAddresses[0].emailAddress,
-          image: imageUrl,
-        }
-      })
-    }
-
   const tour = await prisma.tour.findFirst({where: {slug}});
+  const reviews = await prisma.review.findMany({
+    where: {tourId: tour?.id},
+    include: {
+      user: true,
+    }
+  });
 
   return (
     <div className="mb-10 md:mb-20 md:pt-28">
@@ -56,15 +49,6 @@ export default async function Tour({params}: {params: {slug: string}}) {
               <Separator className="my-5 md:my-11"/>
               <div className="mb-5 md:mb-11">
                 <h2 className="font-bold text-xl md:text-2xl mb-2">Description</h2>
-                <p className="text-sm">
-                  {" "}
-                  Embark on an unforgettable adventure in the heart of Tanzania:
-                  The Serengeti Safari Tour Imagine yourself traversing the vast
-                  plains of the Serengeti National Park, the jewel of Tanzania&apos;s
-                  wildlife crown. Our Serengeti Safari Tour promises an
-                  immersive experience unlike any other, bringing you
-                  face-to-face with Africa&apos;s magnificent creatures.
-                </p>
                 {tour?.description.map((paragraph, index)=>(
                   <div key={index}>
                       <h2 className="font-bold text-base md:text-lg mt-3">
@@ -75,7 +59,7 @@ export default async function Tour({params}: {params: {slug: string}}) {
                   </p>
                   </div>
                 ))}
-                <p className="mt-2 text-sm md:text-base">Book your dream Serengeti Safari Today!</p>
+                <p className="mt-2 text-sm md:text-base">Book your dream {tour?.name} Safari Today!</p>
               </div>
               <div className="shadow dark:shadow-white rounded-lg p-6">
                 <div className="items-center mb-4">
@@ -84,7 +68,7 @@ export default async function Tour({params}: {params: {slug: string}}) {
                   </p>
                 </div>
                 <div className="grid grid-cols-1 gap-4">
-                  <ReviewComp />
+                  <ReviewComp reviews={reviews} />
                 </div>
               </div>
             </div>

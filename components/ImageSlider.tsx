@@ -1,13 +1,17 @@
 "use client";
 
+
 import { ImagesSlider } from './ui/images-slider'
 import {motion} from "framer-motion";
 
 type Props = {
     images: string[];
+    textp1: string;
+    textp2: string;
+    children?: React.ReactNode;
 }
 
-export default function ImageSlider({images}: Props) {
+export default function ImageSlider({images, children, textp1, textp2}: Props) {
   return (
     <ImagesSlider className="h-[40rem]" images={images}>
     <motion.div
@@ -25,9 +29,9 @@ export default function ImageSlider({images}: Props) {
       className="z-50 flex flex-col justify-center items-center"
     >
       <motion.p className="font-bold text-xl md:text-4xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
-        Crafting unforgettable journeys into the soul of <br /> Africa with
-        the Best of Africa Safaris.
+        {textp1} <br/> {textp2}
       </motion.p>
+      {children}
     </motion.div>
   </ImagesSlider>
   )
