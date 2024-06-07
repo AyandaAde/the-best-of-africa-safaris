@@ -8,9 +8,22 @@ import {currentUser } from "@clerk/nextjs/server";
 export default async function Tour({params}: {params: {slug: string}}) {
   const user = await currentUser();
 
-  const {id} = user!;
-
+  const {id, firstName, lastName, imageUrl, emailAddresses} = user!;
+  
     const slug = params.slug;
+    
+    const dbUser = await prisma.user.findUnique({where: {userId: id}});
+      if(!dbUser){
+        await prisma.user.create({
+          data: {
+            userId: id,
+            fName: firstName,
+            lName: lastName,
+            email: emailAddresses[0].emailAddress,
+            image: imageUrl,
+          }
+        })
+      }
 
   const tour = await prisma.tour.findFirst({where: {slug}});
   const reviews = await prisma.review.findMany({
