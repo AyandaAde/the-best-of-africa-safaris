@@ -7,21 +7,16 @@ import {
   useSpring,
   MotionValue,
 } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { HeroHighlightComp } from "../HighlightText";
 import { DirectionAwareHover } from "./direction-aware-hover";
-import { Button } from "./button";
+import { Tours } from "@/lib/types";
+import PriceTag from "../PriceTag";
 
 export const HeroParallax = ({
   products,
 }: {
-  products: {
-    title: string;
-    link: string;
-    thumbnail: string;
-    price: string;
-  }[];
+  products: Tours[];
 }) => {
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
@@ -77,7 +72,7 @@ export const HeroParallax = ({
             <ProductCard
               product={product}
               translate={translateX}
-              key={product.title}
+              key={product.id}
             />
           ))}
         </motion.div>
@@ -86,7 +81,7 @@ export const HeroParallax = ({
             <ProductCard
               product={product}
               translate={translateXReverse}
-              key={product.title}
+              key={product.id}
             />
           ))}
         </motion.div>
@@ -95,7 +90,7 @@ export const HeroParallax = ({
             <ProductCard
               product={product}
               translate={translateX}
-              key={product.title}
+              key={product.id}
             />
           ))}
         </motion.div>
@@ -138,12 +133,7 @@ export const ProductCard = ({
   product,
   translate,
 }: {
-  product: {
-    title: string;
-    link: string;
-    thumbnail: string;
-    price: string;
-  };
+  product: Tours;
   translate: MotionValue<number>;
 }) => {
   return (
@@ -154,14 +144,14 @@ export const ProductCard = ({
       whileHover={{
         y: -20,
       }}
-      key={product.title}
+      key={product.id}
       className="group group/product h-96 w-[30rem] relative flex-shrink-0"
     >
       <Link
-        href={product.link}
+        href={`/main/tour/${product.slug}`}
         className="block group-hover/product:shadow-2xl "
       >
-        <DirectionAwareHover imageUrl={product.thumbnail}>
+        <DirectionAwareHover imageUrl={product.imageUrl}>
       <h2
       className="font-bold text-xl">
           <motion.div
@@ -178,14 +168,13 @@ export const ProductCard = ({
             }}
             className="absolute hidden group-hover:block -z-10 inset-0 w-full h-7 bg-primary"
             />
-        {product.title}
+        {product.name}
       </h2>
-      <p className="font-normal text-sm">
-        From {product.price}
+      <p className="font-normal text-sm mt-2">
+        From <PriceTag price={product.price}/>
       </p>
         </DirectionAwareHover>
       </Link>
-    
     </motion.div>
   );
 };

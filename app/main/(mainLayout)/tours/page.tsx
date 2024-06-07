@@ -110,7 +110,7 @@ export default function ToursPage() {
         <Separator className="mt-20"/>
         <div className="flex flex-row flex-wrap gap-5 mx-auto justify-center my-20">
           {tours?.map((tour: any, index: number) => (
-            <TourWobbleCard key={index} tour={tour}/>
+            <TourWobbleCard key={index} tour={tour} isLoading={fetchTours.isPending}/>
           ))}
         </div>
       </div>

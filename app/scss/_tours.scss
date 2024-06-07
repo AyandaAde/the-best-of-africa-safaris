@@ -1,0 +1,12 @@
+@keyframes from-left-to-right {
+  0% {
+    translate: -100%;
+  }
+  100% {
+    translate: 100%;
+  }
+}
+
+.skeleton_animation {
+  animation: from-left-to-right 2s infinite;
+}

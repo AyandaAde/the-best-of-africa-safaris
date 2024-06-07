@@ -71,7 +71,7 @@ export default function CustomerSupportWidget() {
             className="relative max-h-[80vh] overflow-scroll scrollbar-hide"
             id="message-container"
           >
-            <div className="sticky top-0 inset-x-0 p-2 h-fit bg-white dark:bg-black">
+            <div className="sticky top-0 inset-x-0 p-2 h-fit bg-popover">
               <h3 className="text-2xl font-bold">Customer Support</h3>
               <p className="text-base text-gray-500 dark:text-gray-400">
                 Ask us anything

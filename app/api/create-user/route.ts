@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
         },
       });
     };
-    url.pathname = "/";
+    url.pathname = "/main/home";
     return NextResponse.redirect(url);
   } catch (error) {
     console.log(error);

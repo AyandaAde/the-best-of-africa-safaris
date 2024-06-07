@@ -22,6 +22,7 @@ export const WobbleCard = ({
     const y = (clientY - (rect.top + rect.height / 2)) / 20;
     setMousePosition({ x, y });
   };
+
   return (
     <motion.section
       onMouseMove={handleMouseMove}
