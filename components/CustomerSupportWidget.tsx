@@ -10,6 +10,7 @@ import { Input } from "./ui/input";
 import { useEffect } from "react";
 import { useChat } from "ai/react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 
 export default function CustomerSupportWidget() {
@@ -103,9 +104,9 @@ export default function CustomerSupportWidget() {
             </div>
             {isLoading && (
               <div className={`${styles.bouncing_loader} px-3 py-1`}>
-                <div></div>
-                <div></div>
-                <div></div>
+                <div/>
+                <div/>
+                <div/>
               </div>
             )}
             <form
@@ -122,6 +123,7 @@ export default function CustomerSupportWidget() {
                 <Send className="h-4 w-4" />
               </Button>
             </form>
+            <p className="text-muted-foreground text-xs md:text-[13px] mt-1">Made with AI by <Link href="https://ayanda.vercel.app" className="underline">Ayanda Kinyambo</Link></p>
           </div>
         </PopoverContent>
       </Popover>

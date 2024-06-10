@@ -16,9 +16,8 @@ import {
 import Link from "next/link";
 
 export default function Gallery() {
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
-
+  const [modalIndex, setModalIndex] = useState(0);
   const images = [
     "https://images.unsplash.com/photo-1689479665618-b536a8c72a0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FmYXJpJTIwdGFuemFuaWF8ZW58MHx8MHx8fDA%3D",
     "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
@@ -28,70 +27,81 @@ export default function Gallery() {
   const animals = [
     {
       name: "Lion",
-      type: "Mamal",
-      imageUrl:
-        "https://images.unsplash.com/photo-1648079107818-933f1635b08b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHRhbnphbmlhJTIwc2FmYXJpJTIwbGlvbnxlbnwwfHwwfHx8MA%3D%3D",
-        images: [
-          "https://images.unsplash.com/photo-1689479665618-b536a8c72a0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FmYXJpJTIwdGFuemFuaWF8ZW58MHx8MHx8fDA%3D",
-    "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-    "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-        ],
+      type: "Mammal",
+      imageUrl: "/images/lions/lions1.jpg",
+      images: [
+        "/images/lions/lions2.jpg",
+        "/images/lions/lions3.jpg",
+        "/images/lions/lions4.jpg",
+      ],
     },
     {
       name: "Giraffe",
-      type: "Mamal",
-      imageUrl:
-        "https://images.unsplash.com/photo-1528448103896-24ba8a0ad2cc?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dGFuemFuaWElMjBzYWZhcmklMjBnaXJhZmZlfGVufDB8fDB8fHww",
-        images: [
-          "https://images.unsplash.com/photo-1689479665618-b536a8c72a0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FmYXJpJTIwdGFuemFuaWF8ZW58MHx8MHx8fDA%3D",
-    "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-    "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-        ],
+      type: "Mammal",
+      imageUrl: "/images/giraffes/giraffe1.jpg",
+      images: [
+        "/images/giraffes/giraffe2.jpg",
+        "/images/giraffes/giraffe3.jpg",
+        "/images/giraffes/giraffe4.jpg",
+        "/images/giraffes/giraffe5.jpg",
+      ],
     },
     {
       name: "Zebra",
-      type: "Mamal",
-      imageUrl:
-        "https://images.unsplash.com/photo-1689479665287-60c09e2795e0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHRhbnphbmlhJTIwc2FmYXJpJTIwemVicmF8ZW58MHx8MHx8fDA%3D",
-        images: [
-          "https://images.unsplash.com/photo-1689479665618-b536a8c72a0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FmYXJpJTIwdGFuemFuaWF8ZW58MHx8MHx8fDA%3D",
-    "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-    "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-        ],
+      type: "Mammal",
+      imageUrl: "/images/zebra/zebra1.jpg",
+      images: [
+        "/images/zebra/zebra2.jpg",
+        "/images/zebra/zebra3.jpg",
+        "/images/zebra/zebra4.jpg",
+        "/images/zebra/zebra5.jpg",
+      ],
     },
     {
       name: "Elephant",
-      type: "Mamal",
-      imageUrl:
-        "https://images.unsplash.com/photo-1520542059400-dc9d1d8ae9de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dGFuemFuaWElMjBzYWZhcmklMjBlbGVwaGFudHxlbnwwfHwwfHx8MA%3D%3D",
-        images: [
-          "https://images.unsplash.com/photo-1689479665618-b536a8c72a0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FmYXJpJTIwdGFuemFuaWF8ZW58MHx8MHx8fDA%3D",
-    "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-    "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-        ],
+      type: "Mammal",
+      imageUrl: "/images/elephants/elephant1.jpg",
+      images: [
+        "/images/elephants/elephant2.jpg",
+        "/images/elephants/elephant3.jpg",
+        "/images/elephants/elephant4.jpg",
+      ],
+    },
+    {
+      name: "Crocodile",
+      type: "Reptile",
+      imageUrl: "/images/crocodile/crocodile3.jpg",
+      images: [
+        "/images/crocodile/crocodile1.jpg",
+        "/images/crocodile/crocodile2.jpg",
+      ],
+    },
+    {
+      name: "Buffalo",
+      type: "Mammal",
+      imageUrl: "/images/buffalo/buffalo1.jpg",
+      images: [
+        "/images/buffalo/buffalo2.jpg",
+        "/images/buffalo/buffalo3.jpg",
+        "/images/buffalo/buffalo4.jpg",
+        "/images/buffalo/buffalo5.jpg",
+      ],
+    },
+    {
+      name: "Hyena",
+      type: "Mammal",
+      imageUrl: "/images/hyena/hyena3.jpg",
+      images: [
+        "/images/hyena/hyena2.jpg",
+        "/images/hyena/hyena1.jpg",
+        "/images/hyena/hyena4.jpg",
+      ],
     },
   ];
 
-  function openModal(index: number) {
-    setCurrentPhotoIndex(index);
-    setShowModal(true);
-  }
-
-  function handlePrevious() {
-    setCurrentPhotoIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  }
-
-  function handleNext() {
-    setCurrentPhotoIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
-  }
-
   function closeModal() {
     setShowModal(false);
-  };
+  }
 
   return (
     <div className="mb-20 md:mb-40">
@@ -114,7 +124,9 @@ export default function Gallery() {
             Immerse yourself in the wonder of Africa through <br /> our gallery.
           </motion.p>
           <Button className="px-4 py-2 backdrop-blur-sm border bg-emerald-300/10 border-emerald-500/20 text-white mx-auto text-center rounded-full relative mt-4">
-            <Link href="/main/tours" className="w-full">Book a Tour Now →</Link>
+            <Link href="/main/tours" className="w-full">
+              Book a Tour Now →
+            </Link>
             <div className="absolute inset-x-0 h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-[#024034] to-transparent" />
           </Button>
         </motion.div>
@@ -124,7 +136,10 @@ export default function Gallery() {
           <>
             <div
               key={index}
-              onClick={() => setShowModal(true)}
+              onClick={() => {
+                setShowModal(true)
+                setModalIndex(index)
+              }}
               className="relative shadow-xl w-[300px] h-[300px] md:w-[400px] md:h-[400px] mx-auto rounded-xl group overflow-hidden"
             >
               <Image
@@ -145,44 +160,46 @@ export default function Gallery() {
                 </p>
               </div>
             </div>
-            {
-              showModal && (
-                <motion.div
+            {showModal && (
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{duration:1}}
-                className="fixed bg-black/40 z-50 left-0 top-0 w-screen h-screen">
-              <Carousel className="w-[300px] md:w-full max-w-lg mx-auto relative top-[120px]">
-                <CarouselContent>
-                  {animal.images.map((image, index) => (
-                    <CarouselItem key={index}>
-                      <div className="p-1">
-                            <Image
-                              src={image}
-                              alt={image}
-                              width={900}
-                              height={900}
-                              className="aspect-square rounded-xl group-hover:scale-125 transition duration-1000"
-                            />
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-              </Carousel>
-              <Button
-                className="absolute top-2 right-2 rounded-full text-white text-lg"
-                variant={"ghost"}
-                onClick={closeModal}
+                transition={{ duration: 1 }}
+                className="fixed bg-black/40 z-50 left-0 top-0 w-screen h-screen"
               >
-                <CircleXIcon className="font-medium text-2xl text-primary" />
-              </Button>
-            </motion.div>
-              )
-            }
+                <Carousel className="w-[300px] md:w-full max-w-lg mx-auto relative top-[120px]">
+                  <CarouselContent>
+                    {animals[modalIndex].images.map((image, index) => {
+                          return (
+                            <CarouselItem key={index}>
+                              <div className="p-1">
+                                <Image
+                                  src={image}
+                                  alt={image}
+                                  width={900}
+                                  height={900}
+                                  className="aspect-square rounded-xl group-hover:scale-125 transition duration-1000"
+                                />
+                              </div>
+                            </CarouselItem>
+                          );
+                        })}
+                  </CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
+                <Button
+                  className="absolute top-2 right-2 rounded-full text-white text-lg"
+                  variant={"ghost"}
+                  onClick={closeModal}
+                >
+                  <CircleXIcon className="font-medium text-2xl text-primary" />
+                </Button>
+              </motion.div>
+            )}
           </>
         ))}
+          
       </div>
     </div>
   );

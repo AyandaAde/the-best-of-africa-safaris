@@ -63,12 +63,6 @@ export default function Footer() {
                   Home
                 </Link>
                 <Link
-                  href="/main/about"
-                  className="pb-4 hover:text-primary block"
-                >
-                  About
-                </Link>
-                <Link
                   href="/main/tours"
                   className="pb-4 hover:text-primary block"
                 >
@@ -90,13 +84,13 @@ export default function Footer() {
                 About Us
               </Link>
               <Link
-                href="/lodge/terms-of-service"
+                href="/main/terms-of-service"
                 className="pb-4 hover:text-primary block"
               >
                 Terms of Service
               </Link>
               <Link
-                href="/lodge/contact"
+                href="/main/contact"
                 className="pb-4 hover:text-primary block"
               >
                 Get in Touch
