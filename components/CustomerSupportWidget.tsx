@@ -120,7 +120,7 @@ export default function CustomerSupportWidget() {
                 className="w-1/2"
               />
               <Button type="submit" className="bg-blue-600 ml-2">
-                <Send className="h-4 w-4" />
+                <Send className="h-4 w-4"/>
               </Button>
             </form>
             <p className="text-muted-foreground text-xs md:text-[13px] mt-1">Made with AI by <Link href="https://ayanda.vercel.app" className="underline">Ayanda Kinyambo</Link></p>

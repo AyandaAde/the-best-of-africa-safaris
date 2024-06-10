@@ -46,8 +46,8 @@ export default async function HomePage() {
         </div>
         <div className="relative mt-14">
           <Image
-          src={"https://images.unsplash.com/photo-1430514625417-38e9c79c95c8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHRhbnphbmlhJTIwc2FmYXJpJTIwbGlvbnN8ZW58MHx8MHx8fDA%3D"}
-          alt="Lion hunting zebra."
+          src={"/images/giraffes/giraffe4.jpg"}
+          alt="A safari truck and giraffes."
           width={1080}
           height={1080}
           className="rounded-md w-full h-[500px] object-cover"

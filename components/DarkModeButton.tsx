@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function DarkModeButton() {
-  const { setTheme } = useTheme()
+  const { setTheme, theme } = useTheme()
 
   return (
     <DropdownMenu>
@@ -25,13 +25,13 @@ export default function DarkModeButton() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem className={`${theme === "light" && "bg-zinc-300 text-accent-foreground"}`} onClick={() => setTheme("light")}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem className={`${theme === "dark" && "bg-zinc-700 text-accent-foreground"}`} onClick={() => setTheme("dark")}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem className={`${theme === "system" && "bg-muted text-accent-foreground"}`} onClick={() => setTheme("system")}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

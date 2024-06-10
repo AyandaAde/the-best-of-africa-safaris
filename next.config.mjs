@@ -22,7 +22,10 @@ const nextConfig = {
             },
             {
                 hostname: "the-best-of-africa-safaris.s3.us-east-2.amazonaws.com",
-            }
+            },
+            {
+                hostname: "unsplash.com",
+            },
         ],
     },
     typescript: {
