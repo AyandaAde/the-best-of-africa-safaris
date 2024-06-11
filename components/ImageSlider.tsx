@@ -5,13 +5,25 @@ import { ImagesSlider } from './ui/images-slider'
 import {motion} from "framer-motion";
 
 type Props = {
-    images: string[];
     textp1: string;
     textp2: string;
     children?: React.ReactNode;
 }
 
-export default function ImageSlider({images, children, textp1, textp2}: Props) {
+export default function ImageSlider({children, textp1, textp2}: Props) {
+  
+  const images = [
+    "/images/flamingos.jpg",
+    "/images/lions/lions1.jpg",
+    "/images/buffalo/buffalo1.jpg",
+    "/images/crocodile/crocodile2.jpg",
+    "/images/elephants/elephant1.jpg",
+    "/images/giraffes/giraffe2.jpg",
+    "/images/hyena/hyena2.jpg",
+    "/images/kori-bustard/kori-bustard2.jpg",
+    "/images/zebra/zebra4.jpg",
+  ];
+
   return (
     <ImagesSlider className="h-[40rem]" images={images}>
     <motion.div

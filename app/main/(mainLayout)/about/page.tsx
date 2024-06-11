@@ -8,11 +8,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function AboutPage() {
-  const images = [
-    "https://images.unsplash.com/photo-1689479665618-b536a8c72a0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FmYXJpJTIwdGFuemFuaWF8ZW58MHx8MHx8fDA%3D",
-    "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-    "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-  ];
 
   const team = [
     {
@@ -52,7 +47,7 @@ export default function AboutPage() {
       content: (
         <div className="h-full w-full  flex items-center justify-center text-white">
           <Image
-            src="https://images.unsplash.com/photo-1689479665481-1c891748e8b9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjZ8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww"
+            src="/images/lion-cub.avif"
             width={300}
             height={300}
             className="h-full w-full object-cover"
@@ -80,7 +75,7 @@ export default function AboutPage() {
       content: (
         <div className="h-full w-full  flex items-center justify-center text-white">
           <Image
-            src="https://images.unsplash.com/photo-1689479665413-e954e8a36240?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww"
+            src="/images/zebra/zebra4.jpg"
             width={300}
             height={300}
             className="h-full w-full object-cover"
@@ -111,7 +106,7 @@ export default function AboutPage() {
       content: (
         <div className="h-full w-full  flex items-center justify-center text-white">
           <Image
-            src="https://plus.unsplash.com/premium_photo-1661915734413-d1378996e656?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww"
+            src="/images/giraffes/giraffe3.jpg"
             width={300}
             height={300}
             className="h-full w-full object-cover"
@@ -138,7 +133,7 @@ export default function AboutPage() {
       content: (
         <div className="h-full w-full  flex items-center justify-center text-white">
           <Image
-            src="https://images.unsplash.com/photo-1526226244945-39c5d1d9e61a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dGFuemFuaWElMjBzYWZhcmklMjBnaXJhZmZlc3xlbnwwfHwwfHx8MA%3D%3D"
+            src="/images/elephants/elephant1.jpg"
             width={300}
             height={300}
             className="h-full w-full object-cover"
@@ -152,7 +147,6 @@ export default function AboutPage() {
   return (
     <div className="mb-20 md:mb-40">
       <ImageSlider
-        images={images}
         textp1={"Crafting unforgettable journeys into the soul of Africa"}
         textp2={"with the Best of Africa Safaris."}
       >

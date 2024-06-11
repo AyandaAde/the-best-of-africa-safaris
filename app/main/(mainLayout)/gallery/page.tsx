@@ -1,9 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ImagesSlider } from "@/components/ui/images-slider";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, CircleXIcon } from "lucide-react";
+import { CircleXIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import {
@@ -14,15 +13,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Link from "next/link";
+import ImageSlider from "@/components/ImageSlider";
 
 export default function Gallery() {
   const [showModal, setShowModal] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
-  const images = [
-    "https://images.unsplash.com/photo-1689479665618-b536a8c72a0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FmYXJpJTIwdGFuemFuaWF8ZW58MHx8MHx8fDA%3D",
-    "https://images.unsplash.com/photo-1689479665398-1c9b7af33284?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-    "https://images.unsplash.com/photo-1689479665318-0b4ab35256de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNhZmFyaSUyMHRhbnphbmlhfGVufDB8fDB8fHww",
-  ];
 
   const animals = [
     {
@@ -33,6 +28,7 @@ export default function Gallery() {
         "/images/lions/lions2.jpg",
         "/images/lions/lions3.jpg",
         "/images/lions/lions4.jpg",
+        "/images/lions/lions5.jpg",
       ],
     },
     {
@@ -55,6 +51,7 @@ export default function Gallery() {
         "/images/zebra/zebra3.jpg",
         "/images/zebra/zebra4.jpg",
         "/images/zebra/zebra5.jpg",
+        "/images/zebra/zebra6.jpg",
       ],
     },
     {
@@ -65,7 +62,9 @@ export default function Gallery() {
         "/images/elephants/elephant2.jpg",
         "/images/elephants/elephant3.jpg",
         "/images/elephants/elephant4.jpg",
+        "/images/elephants/elephant5.jpg",
       ],
+      video: "/images/elephants/elephants-vid.mp4",
     },
     {
       name: "Crocodile",
@@ -85,6 +84,7 @@ export default function Gallery() {
         "/images/buffalo/buffalo3.jpg",
         "/images/buffalo/buffalo4.jpg",
         "/images/buffalo/buffalo5.jpg",
+        "/images/buffalo/buffalo6.jpg",
       ],
     },
     {
@@ -97,6 +97,16 @@ export default function Gallery() {
         "/images/hyena/hyena4.jpg",
       ],
     },
+    {
+      name: "Kori Bustard",
+      type: "Bird",
+      imageUrl: "/images/kori-bustard/kori-bustard1.jpg",
+      images: [
+        "/images/kori-bustard/kori-bustard2.jpg",
+        "/images/kori-bustard/kori-bustard3.jpg",
+      ],
+      video: "/images/kori-bustard/kori-bustard-vid.mp4",
+    },
   ];
 
   function closeModal() {
@@ -105,40 +115,25 @@ export default function Gallery() {
 
   return (
     <div className="mb-20 md:mb-40">
-      <ImagesSlider className="h-[40rem]" images={images}>
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: -80,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.6,
-          }}
-          className="z-50 flex flex-col justify-center items-center"
-        >
-          <motion.p className="font-bold text-xl md:text-4xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
-            Immerse yourself in the wonder of Africa through <br /> our gallery.
-          </motion.p>
-          <Button className="px-4 py-2 backdrop-blur-sm border bg-emerald-300/10 border-emerald-500/20 text-white mx-auto text-center rounded-full relative mt-4">
-            <Link href="/main/tours" className="w-full">
-              Book a Tour Now →
-            </Link>
-            <div className="absolute inset-x-0 h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-[#024034] to-transparent" />
-          </Button>
-        </motion.div>
-      </ImagesSlider>
+      <ImageSlider
+        textp1={"Immerse yourself in the wonder of Africa through"}
+        textp2={"our gallery."}
+      >
+        <Button className="px-4 py-2 backdrop-blur-sm border bg-emerald-300/10 border-emerald-500/20 text-white mx-auto text-center rounded-full relative mt-4">
+          <Link href={"/main/tours"} className="w-full">
+            Book a tour now →
+          </Link>
+          <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
+        </Button>
+      </ImageSlider>
       <div className="mt-20 md:mt-40 flex flex-row flex-wrap md:w-[700px] lg:w-[900px] mx-auto gap-3">
         {animals.map((animal, index) => (
           <>
             <div
               key={index}
               onClick={() => {
-                setShowModal(true)
-                setModalIndex(index)
+                setShowModal(true);
+                setModalIndex(index);
               }}
               className="relative shadow-xl w-[300px] h-[300px] md:w-[400px] md:h-[400px] mx-auto rounded-xl group overflow-hidden"
             >
@@ -170,20 +165,31 @@ export default function Gallery() {
                 <Carousel className="w-[300px] md:w-full max-w-lg mx-auto relative top-[120px]">
                   <CarouselContent>
                     {animals[modalIndex].images.map((image, index) => {
-                          return (
-                            <CarouselItem key={index}>
-                              <div className="p-1">
-                                <Image
-                                  src={image}
-                                  alt={image}
-                                  width={900}
-                                  height={900}
-                                  className="aspect-square rounded-xl group-hover:scale-125 transition duration-1000"
-                                />
-                              </div>
-                            </CarouselItem>
-                          );
-                        })}
+                      return (
+                        <CarouselItem key={index}>
+                          <div className="p-1">
+                            <Image
+                              src={image}
+                              alt={image}
+                              width={900}
+                              height={900}
+                              className="aspect-square rounded-xl group-hover:scale-125 transition duration-1000"
+                            />
+                          </div>
+                        </CarouselItem>
+                      );
+                    })}
+                    {
+                      animals[modalIndex].video && (
+                        <CarouselItem>
+                          <video
+                            src={animals[modalIndex].video}
+                            controls
+                            className="h-[520px] w-[600px] bg-black rounded-xl group-hover:scale-125 transition duration-1000"
+                          />
+                        </CarouselItem>
+                      )
+                    }
                   </CarouselContent>
                   <CarouselPrevious />
                   <CarouselNext />
@@ -199,7 +205,6 @@ export default function Gallery() {
             )}
           </>
         ))}
-          
       </div>
     </div>
   );
