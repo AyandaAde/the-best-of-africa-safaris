@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { MessageCircleMore, Send } from "lucide-react";
+import { MessageCircleMore, Send, User2Icon } from "lucide-react";
 import { Button } from "./ui/button";
 import styles from "@/app/scss/main.module.scss";
 import { Input } from "./ui/input";
@@ -11,7 +11,6 @@ import { useEffect } from "react";
 import { useChat } from "ai/react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-
 
 export default function CustomerSupportWidget() {
   const file_key = "The-Best-of-Africa-Safaris.pdf";
@@ -22,7 +21,6 @@ export default function CustomerSupportWidget() {
         file_key,
       },
     });
-
 
   const createChat = useMutation({
     mutationFn: async () => {
@@ -104,14 +102,14 @@ export default function CustomerSupportWidget() {
             </div>
             {isLoading && (
               <div className={`${styles.bouncing_loader} px-3 py-1`}>
-                <div/>
-                <div/>
-                <div/>
+                <div />
+                <div />
+                <div />
               </div>
             )}
             <form
-            onSubmit={handleSubmit}
-            className="flex flex-row justify-end sticky bottom-0 inset-x-0 px-2 py-4"
+              onSubmit={handleSubmit}
+              className="flex flex-row justify-end sticky bottom-0 inset-x-0 px-2 py-4"
             >
               <Input
                 value={input}
@@ -119,11 +117,23 @@ export default function CustomerSupportWidget() {
                 onChange={handleInputChange}
                 className="w-1/2"
               />
-              <Button type="submit" className="bg-blue-600 ml-2">
-                <Send className="h-4 w-4"/>
-              </Button>
+              <div className="flex items-center ml-2 gap-2">
+                <Button type="submit" className="bg-blue-600">
+                  <Send className="h-4 w-4" />
+                </Button>
+                <Button type="button" className="bg-blue-600">
+                  <Link href="/main/contact">
+                    <User2Icon className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
             </form>
-            <p className="text-muted-foreground text-xs md:text-[13px] mt-1">Made with AI by <Link href="https://ayanda.vercel.app" className="underline">Ayanda Kinyambo</Link></p>
+            <p className="text-muted-foreground text-xs md:text-[13px] mt-1">
+              Made with AI by{" "}
+              <Link href="https://ayanda.vercel.app" className="underline">
+                Ayanda Kinyambo
+              </Link>
+            </p>
           </div>
         </PopoverContent>
       </Popover>

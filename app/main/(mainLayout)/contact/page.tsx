@@ -24,7 +24,7 @@ const contactFormSchema = z.object({
         message: "Last name must be at least two characters."
     }),
     email: z.string().email("Invalid email address"),
-    message: z.string().min(2, "Message must be at least 2 chacters"),
+    message: z.string().min(2, "Message must be at least 2 characters"),
 });
 
 type ContactForm = z.infer<typeof contactFormSchema>;
@@ -53,14 +53,14 @@ export default function Contact() {
             onSuccess({message}){
                 console.log("Message successfully sent.", {message});
                 sendMessage.mutate(messageData);
-                toast.success("Message successfully sent!");
+                toast.success("Message successfully sent! We will get back to you shortly 🙂");
                 contactForm.reset();
                 router.refresh();
 
             },
             onError(error){
                 console.log("Error sending message.", error);
-                toast.error("Error sending message!");
+                toast.error("Error sending message! Please try again.");
             }
         });
     }
@@ -79,7 +79,7 @@ export default function Contact() {
      <Card className="w-[300px] md:w-full mx-auto bg-white/90 dark:bg-black/90">
       <CardHeader className="text-center">
         <CardTitle className="text-3xl underline mb-3">Contact Us</CardTitle>
-        <CardDescription>Get in touch and ask us anything about our safaris.</CardDescription>
+        <CardDescription>Get in touch and ask us anything about our safaris <br/> and we will get back to you as soon as possible.</CardDescription>
       </CardHeader>
       <CardContent>
       <Form {...contactForm}>
@@ -91,7 +91,7 @@ export default function Contact() {
             <FormItem>
               <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input2 placeholder="Jessie" {...field} />
+                <Input2 placeholder="Jessie" {...field} className="w-[300px] md:w-[450px]" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -143,7 +143,7 @@ export default function Contact() {
           sendMessage.isPending ? (
             <>
               <Loader2 className="animate-spin mr-2" />
-              Submitting
+              Submitting...
             </>
           ) : (
             <>Submit</>
