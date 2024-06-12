@@ -17,11 +17,6 @@ export default function ImageSlider({children, textp1, textp2}: Props) {
     "/images/lions/lions1.jpg",
     "/images/buffalo/buffalo1.jpg",
     "/images/crocodile/crocodile2.jpg",
-    "/images/elephants/elephant1.jpg",
-    "/images/giraffes/giraffe2.jpg",
-    "/images/hyena/hyena2.jpg",
-    "/images/kori-bustard/kori-bustard2.jpg",
-    "/images/zebra/zebra4.jpg",
   ];
 
   return (
