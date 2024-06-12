@@ -91,7 +91,7 @@ export default function Contact() {
             <FormItem>
               <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input2 placeholder="Jessie" {...field} className="w-[300px] md:w-[450px]" />
+                <Input2 placeholder="Jessie" {...field} className="md:w-[450px]" />
               </FormControl>
               <FormMessage />
             </FormItem>
