@@ -39,12 +39,13 @@ export async function POST(req: Request) {
     Email: ${user?.email}
     For ${guests} guest(s)
     ${adultCount} adult(s)
-    ${childrenCount !== 0 && childrenCount + " child(ren),"}
-    ${infantCount !== 0 && infantCount + " infant(s),"}
+    ${childrenCount !== 0 ? childrenCount + " child(ren)," : ""}
+    ${infantCount !== 0 ? infantCount + " infant(s)," : ""}
     For the ${tourName} tour,
     ${endDate === startDate ? "On " + startDate : "From " + startDate + " to " + endDate}
 
-    Total price: $${bookingPrice}
+    Price per person: $${bookingPrice}
+    Total price: $${bookingPrice * guests}
     `,
   }
 

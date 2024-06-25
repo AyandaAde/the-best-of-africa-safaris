@@ -32,7 +32,8 @@ export default async function Tour({params}: {params: {slug: string}}) {
       user: true,
     }
   });
-
+  if(!tour) return <div>Tour not found</div>;
+  
   return (
     <div className="mb-10 md:mb-20 md:pt-28">
       <TourGallery images={tour?.images!} />

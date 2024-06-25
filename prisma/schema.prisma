@@ -65,6 +65,7 @@ model User {
   email   String?
   image   String?
   about   String?
+  isAdmin Boolean?
   Booking Booking[]
   Review  Review[]
 

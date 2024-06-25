@@ -1,10 +1,8 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
 import { Separator } from "./ui/separator";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
-import { DateRange } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -21,8 +19,16 @@ import axios from "axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import {removeAdult, addAdult, removeChild, addChild, removeInfant, addInfant} from "@/app/features/booking/bookingSlice";
+import {
+  removeAdult,
+  addAdult,
+  removeChild,
+  addChild,
+  removeInfant,
+  addInfant,
+} from "@/app/features/booking/bookingSlice";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 type Props = {
   specialNote?: string;
@@ -43,104 +49,95 @@ export default function BookTourCta({
   tourName,
   className,
 }: Props) {
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: addDays(new Date(), 1),
-  });
-  const [noOfDays, setNoOfDays] = useState(0);
+  const [date, setDate] = useState<Date | undefined>(new Date());
   const [bookingPrice, setBookingPrice] = useState(price);
-  const {user} = useUser();
-
-  const {adultCount, childrenCount, infantCount, guests} = useSelector((store: any)=> store.booking);
+  const { user } = useUser();
+  const router = useRouter();
+  
+  const { adultCount, childrenCount, infantCount, guests } = useSelector(
+    (store: any) => store.booking
+  );
 
   const dispatch = useDispatch();
-  
-  
+
   const createBooking = useMutation({
     mutationFn: async () => {
-      const startDate = date?.from?.toString();
-      const endDate = date?.to ?  date?.to?.toString() : date?.from?.toString();
-
       const res = await axios.post("/api/bookings", {
-        startDate: startDate?.slice(0,15),
-        endDate: endDate?.slice(0,15),
+        startDate: date?.toDateString().slice(0, 15),
+        endDate: addDays(date!, 3).toDateString().slice(0, 15),
         discount,
         adultCount,
         childrenCount,
         infantCount,
         guests,
-        noOfDays,
+        noOfDays: 3,
         bookingPrice,
         tourId,
         userId,
         tourName,
       });
       return res.data;
-    }
-  })
-  const router = useRouter();
-  const params = useParams();
-  const slug = params;
+    },
+  });
 
-  const discountPrice = price - (price / 100) * discount;
-
-  function handleDateSelect(date: DateRange | undefined){
+  function handleDateSelect(date: Date | undefined) {
     setDate(date);
-    calculateTotalPrice();
-  };
+  }
 
-  function calculateNoOfDays(){
-    let noOfDays = 0;
+  function calculateDiscountPrice() {
+    let discPrice = 0;
+    const discountPrice = price - (price / 100) * discount;
+    let sub = discountPrice / 3;
+    if (guests === 1) {
+      discPrice = discountPrice;
+    } else if (guests === 2) {
+      discPrice = discountPrice - sub;
+    } else if (guests >= 3 && guests <= 8) {
+      discPrice = discountPrice - (sub + sub * (1.66 * (guests / 10)));
+    } else if (guests > 8) {
+      discPrice = discountPrice - (sub + sub * (1.66 * (8 / 10)));
+    }
 
-    if(date?.from && date?.to){
-      noOfDays = (date.to.getTime()) - (date.from.getTime());
-      noOfDays = Math.ceil(noOfDays/(24*60*60*1000));
-    };
+    return parseFloat(discPrice.toFixed(2));
+  }
 
-    return noOfDays;
-  };
-
-
-  function calculateTotalPrice(){
+  function calculateTotalPrice() {
     let totalPrice = 0;
-    let noOfDays = calculateNoOfDays();
+    let sub = price / 3;
+    if (guests === 1) {
+      totalPrice = price;
+    } else if (guests === 2) {
+      totalPrice = price - sub;
+    } else if (guests >= 3 && guests <= 8) {
+      totalPrice = price - (sub + sub * (1.66 * (guests / 10)));
+    } else if (guests > 8) {
+      totalPrice = price - (sub + sub * (1.66 * (8 / 10)));
+    }
 
-    if (discount !== 0){
-      if(noOfDays > 1){
-        totalPrice = discountPrice * noOfDays;
-        return totalPrice;
-      }
-      totalPrice = discountPrice;
-      return totalPrice;
-    }
-    if(noOfDays > 1){
-      totalPrice = price * noOfDays;
-      return totalPrice;
-    }
-    totalPrice = price;
-    return totalPrice;
+    return parseFloat(totalPrice.toFixed(2));
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let noOfDays = calculateNoOfDays();
-    let bookingPrice = calculateTotalPrice();
-    setNoOfDays(noOfDays);
-    setBookingPrice(bookingPrice);
-    if(!date){
+    if (discount !== 0) {
+      setBookingPrice(calculateDiscountPrice());
+    } else {
+      setBookingPrice(calculateTotalPrice());
+    }
+    if (!date) {
       toast.error("Please select a date");
       return;
     }
     createBooking.mutate(undefined, {
-      onSuccess: ({message}) => {
-        console.log("Booking successfully created", {message}),
-        createBooking.mutate();
-        toast.success("Booking successfully created");
+      onSuccess: ({ message }) => {
+        console.log("Booking successfully created", { message }),
+          toast.success("Booking successfully created");
+          router.refresh();
       },
       onError: (error) => {
         console.log("Error creating booking", error);
         toast.error("Error creating booking. Please try again.");
-      }
+      },
     });
   }
   return (
@@ -149,14 +146,14 @@ export default function BookTourCta({
         <span
           className={`${
             discount !== 0 && "text-muted-foreground"
-          } flex flex-col font-bold text-xl`}
+          } flex flex-col font-bold text-lg md:text-xl`}
         >
-          <p>Price: ${calculateTotalPrice()}</p>
+          <p>Price per Person: ${calculateTotalPrice()}</p>
         </span>
         {discount !== 0 && (
-          <span className="text-red-500 font-bold text-xl">
+          <span className="text-red-500 font-bold text-lg md:text-xl">
             {" "}
-            | discount {discount}% Now <span>${discountPrice}</span>
+            | discount {discount}% Now <span>${calculateDiscountPrice()}</span>
           </span>
         )}
       </h3>
@@ -178,33 +175,16 @@ export default function BookTourCta({
                 )}
               >
                 <CalendarIcon className="hidden sm:block mr-1 md:mr-2 h-4 w-4" />
-                {date?.from ? (
-                  date.to ? (
-                    <>
-                      <span className="hidden md:block">{format(date.from, "LLL dd, y")} -{" "}</span>
-                      <span className="hidden md:block">{format(date.to, "LLL dd, y")}</span>
-                      <span className="md:hidden">{format(date.from, "MM/dd/y")} -{" "}</span>
-                      <span className="md:hidden">{format(date.to, "MM/dd/y")}</span>
-                    </>
-                  ) : (
-                    format(date.from, "LLL dd, y")
-                  )
-                ) : (
-                  <span>Pick a date</span>
-                )}
+                {date ? format(date, "PPP") : <span>Pick a date</span>}
               </Button>
             </PopoverTrigger>
-            <PopoverContent
-            className="w-auto p-0"
-            align="center"
-            >
+            <PopoverContent className="w-auto p-0" align="center">
               <Calendar
                 initialFocus
-                mode="range"
-                defaultMonth={date?.from}
+                mode="single"
                 selected={date}
                 onSelect={handleDateSelect}
-                numberOfMonths={2}
+                disabled={(date) => date < new Date()}
               />
             </PopoverContent>
           </Popover>
@@ -229,7 +209,10 @@ export default function BookTourCta({
         <Label htmlFor="last Name" className="text-base">
           Email
         </Label>
-        <Input required defaultValue={user?.emailAddresses[0].emailAddress || ""} />
+        <Input
+          required
+          defaultValue={user?.emailAddresses[0].emailAddress || ""}
+        />
         <p className="text-xs text-muted-foreground mb-2">
           Please type in your email
         </p>
@@ -266,7 +249,11 @@ export default function BookTourCta({
                   <div className="flex flex-row items-center w-[150px] justify-between">
                     <Button
                       onClick={() => {
-                        if (adultCount >= 2) dispatch(removeAdult());
+                        if (adultCount >= 2) {
+                          dispatch(removeAdult());
+                          calculateTotalPrice();
+                          calculateDiscountPrice();
+                        }
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -276,7 +263,9 @@ export default function BookTourCta({
                     <p>{adultCount}</p>
                     <Button
                       onClick={() => {
-                        dispatch(addAdult())
+                        dispatch(addAdult());
+                        calculateTotalPrice();
+                        calculateDiscountPrice();
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -296,7 +285,11 @@ export default function BookTourCta({
                   <div className="flex flex-row items-center w-[150px] justify-between">
                     <Button
                       onClick={() => {
-                        if (childrenCount >= 1) dispatch(removeChild())
+                        if (childrenCount >= 1) {
+                          dispatch(removeChild());
+                          calculateTotalPrice();
+                          calculateDiscountPrice();
+                        }
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -305,7 +298,11 @@ export default function BookTourCta({
                     </Button>
                     <p>{childrenCount}</p>
                     <Button
-                      onClick={() => dispatch(addChild())}
+                      onClick={() => {
+                        dispatch(addChild());
+                        calculateTotalPrice();
+                        calculateDiscountPrice();
+                      }}
                       variant={"outline"}
                       className="rounded-full"
                     >
@@ -324,7 +321,11 @@ export default function BookTourCta({
                   <div className="flex flex-row items-center w-[150px] justify-between">
                     <Button
                       onClick={() => {
-                        if (infantCount >= 1) dispatch(removeInfant())
+                        if (infantCount >= 1) {
+                          dispatch(removeInfant());
+                          calculateTotalPrice();
+                          calculateDiscountPrice();
+                        }
                       }}
                       variant={"outline"}
                       className="rounded-full"
@@ -333,7 +334,11 @@ export default function BookTourCta({
                     </Button>
                     <p>{infantCount}</p>
                     <Button
-                      onClick={() => dispatch(addInfant())}
+                      onClick={() => {
+                        dispatch(addInfant());
+                        calculateTotalPrice();
+                        calculateDiscountPrice();
+                      }}
                       variant={"outline"}
                       className="rounded-full"
                     >
@@ -346,20 +351,18 @@ export default function BookTourCta({
           </PopoverContent>
         </Popover>
         <Button
-        type="submit"
-        className="mt-4"
-        disabled={createBooking.isPending}
+          type="submit"
+          className="mt-4"
+          disabled={createBooking.isPending}
         >
-          {
-            createBooking.isPending ? (
-              <>
+          {createBooking.isPending ? (
+            <>
               <Loader2 className="animate-spin mr-2" />
               <span>Creating Booking...</span>
-              </>
-            ) : (
-              <span>Submit</span>
-            )
-          }
+            </>
+          ) : (
+            <span>Submit</span>
+          )}
         </Button>
       </form>
     </div>
