@@ -37,6 +37,7 @@
     "ai": "^3.1.20",
     "aws-sdk": "^2.1636.0",
     "axios": "^1.7.2",
+    "braces": "^3.0.3",
     "chart.js": "^4.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
