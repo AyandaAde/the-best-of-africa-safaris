@@ -15,17 +15,17 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import DarkModeButton from "./DarkModeButton";
 import { forwardRef } from "react";
-import { Tours } from "@/lib/types";
+import { Activities } from "@/lib/types";
 
 interface Props {
-  tours: Tours[];
+  activities: Activities[];
   className?: string;
 }
-export default function Navbar({ className, tours }: Props) {
-  const {userId} = useAuth();
+export default function Navbar({ className, activities }: Props) {
+  const { userId } = useAuth();
   return (
     <div
-      className={cn("fixed top-3 inset-x-0 max-w-2xl mx-auto z-50", className)}
+      className={cn("fixed top-3 inset-x-0 max-w-3xl mx-auto z-50", className)}
     >
       <nav className="relative rounded-full border border-transparent bg-card dark:bg-background shadow dark:border-white/[0.2] bg-white shadow-input flex justify-center space-x-4 px-8 py-6 ">
         <NavigationMenu>
@@ -46,19 +46,19 @@ export default function Navbar({ className, tours }: Props) {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuTrigger>
-              <Link href="/main/tours" legacyBehavior passHref>
-                  Tours
-              </Link>
-                </NavigationMenuTrigger>
+                <Link href="/main/activities" legacyBehavior passHref>
+                  Activities
+                </Link>
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
-                  {tours.map((tour)=>(
+                  {activities.map((activity) => (
                     <ListItem
-                    key={tour.id}
-                    href={`/main/tour/${tour.slug}`}
-                    title={tour.name}
+                      key={activity.id}
+                      href={`/main/activity/${activity.slug}`}
+                      title={activity.name}
                     >
-                      {tour.description[0].text.slice(0,100)}
+                      {activity.description[0].text.slice(0, 100)}
                     </ListItem>
                   ))}
                 </ul>
@@ -72,13 +72,13 @@ export default function Navbar({ className, tours }: Props) {
               </Link>
             </NavigationMenuItem>
             <SignedIn>
-            <NavigationMenuItem>
-            <Link href={`/main/user/${userId}`} legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  User Page
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href={`/main/user/${userId}`} legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    User Page
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
             </SignedIn>
             <NavigationMenuItem>
               <Link href="/main/contact" legacyBehavior passHref>
@@ -88,26 +88,22 @@ export default function Navbar({ className, tours }: Props) {
               </Link>
             </NavigationMenuItem>
             <SignedOut>
-            <NavigationMenuItem>
+              <NavigationMenuItem>
                 <Button variant={"ghost"}>
-                    <Link
-                    href="/sign-in"
-                    className="w-full text-foreground"
-                    >
+                  <Link href="/sign-in" className="w-full text-foreground">
                     Sign In
-                    </Link>
-                    </Button>
-            </NavigationMenuItem>
+                  </Link>
+                </Button>
+              </NavigationMenuItem>
             </SignedOut>
             <SignedIn>
-            <NavigationMenuItem>
-                <Button variant={"link"}
-                >
-                <UserButton/>
+              <NavigationMenuItem>
+                <Button variant={"link"}>
+                  <UserButton />
                 </Button>
-            </NavigationMenuItem>
+              </NavigationMenuItem>
             </SignedIn>
-            <DarkModeButton/>
+            <DarkModeButton />
           </NavigationMenuList>
         </NavigationMenu>
       </nav>

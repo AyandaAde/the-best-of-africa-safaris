@@ -34,7 +34,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const tours = await prisma.tour.findMany({
+  const activities = await prisma.activity.findMany({
     orderBy: {
       id: "desc",
     },
@@ -45,7 +45,7 @@ export default async function RootLayout({
       <body className={`${poppins.className} ${chillax.variable}`}>
         <ReduxProvider>
           <QueryProvider>
-            <Navbar className="hidden md:block" tours={tours} />
+            <Navbar className="hidden md:block" activities={activities} />
             <MobileNav />
             {children}
             <Toaster richColors />

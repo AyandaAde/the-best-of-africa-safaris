@@ -1,50 +1,49 @@
 import { prisma } from "@/lib/db/prisma";
 import { NextResponse } from "next/server";
 
+export async function POST(req: Request) {
+  const { bookingId, activityId, userId, rating, review } = await req.json();
 
-export async function POST(req:Request){
-    const {bookingId, tourId, userId, rating, review} = await req.json();
+  const reviews = await prisma.review.findFirst({
+    where: {
+      bookingId,
+    },
+  });
 
-    const reviews = await prisma.review.findFirst({
+  const user = await prisma.user.findUnique({
+    where: {
+      userId,
+    },
+  });
+
+  if (!user) return NextResponse.redirect("/sign-in");
+
+  try {
+    if (reviews) {
+      await prisma.review.update({
         where: {
-            bookingId,
+          id: reviews.id,
         },
-    });
-
-    const user = await prisma.user.findUnique({
-        where: {
-            userId,
+        data: {
+          rating,
+          review,
         },
-    });
-
-    if(!user) return NextResponse.redirect("/sign-in");
-
-    try {
-        if (reviews) {
-            await prisma.review.update({
-                where: {
-                    id: reviews.id,
-                },
-                data: {
-                    rating,
-                    review
-                },
-            });
-        } else {
-            await prisma.review.create({
-                data: {
-                    bookingId,
-                    tourId,
-                    userId: user.id,
-                    rating,
-                    review
-                },
-            });
-        };
-
-        return new NextResponse("Review submitted.");
-    } catch (error) {
-        console.log(error);
-        return new NextResponse("Error submitting review", {status: 400});
+      });
+    } else {
+      await prisma.review.create({
+        data: {
+          bookingId,
+          activityId,
+          userId: user.id,
+          rating,
+          review,
+        },
+      });
     }
+
+    return new NextResponse("Review submitted.");
+  } catch (error) {
+    console.log(error);
+    return new NextResponse("Error submitting review", { status: 400 });
+  }
 }

@@ -1,11 +1,11 @@
 "use client";
 
 import { clearCount } from "@/app/features/booking/bookingSlice";
+import ActivityWobbleCard from "@/components/ActivityWobbleCard";
 import ImageSlider from "@/components/ImageSlider";
 import SearchBar from "@/components/SearchBar";
-import TourWobbleCard from "@/components/TourWobbleCard";
 import { Separator } from "@/components/ui/separator";
-import { Tours } from "@/lib/types";
+import { Activities } from "@/lib/types";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { addDays } from "date-fns";
@@ -14,8 +14,8 @@ import { DateRange } from "react-day-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
-export default function ToursPage() {
-  const [tours, setTours] = useState<Tours[]>([]);
+export default function ActivitiesPage() {
+  const [activities, setActivities] = useState<Activities[]>([]);
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(),
     to: addDays(new Date(), 20),
@@ -29,12 +29,12 @@ export default function ToursPage() {
 
   const dispatch = useDispatch();
 
-  const fetchTours = useMutation({
+  const fetchActivities = useMutation({
     mutationFn: async ()=>{
-      const resp = await axios.post("/api/tours");
-      const tours = resp.data;
-      setTours(tours);
-      return tours;
+      const resp = await axios.post("/api/activities");
+      const activities = resp.data;
+      setActivities(activities);
+      return activities;
     }
   });
 
@@ -54,7 +54,7 @@ export default function ToursPage() {
       });
 
       console.log(resp.data);
-      setTours(resp.data);
+      setActivities(resp.data);
       return resp.data;
     },
   });
@@ -78,10 +78,10 @@ export default function ToursPage() {
   };
 
     useEffect(()=>{
-      fetchTours.mutate(undefined, {
+      fetchActivities.mutate(undefined, {
         onSuccess: (data)=>{
           console.log("Data fetched", data);
-          fetchTours.mutate();
+          fetchActivities.mutate();
         },
         onError(error){
           console.log("Error", error);
@@ -96,14 +96,14 @@ export default function ToursPage() {
       <div className="flex flex-col justify-center items-center w-3/4 gap-3 mx-auto font-chillax my-20 my:mb-40">
         <h3 className="text-black/60 dark:text-white/60 text-base">SEARCH</h3>
         <h2 className="text-center text-3xl md:text-5xl">
-          <span className="font-semibold">AVAILABLE</span> TOURS
+          <span className="font-semibold">AVAILABLE</span> ACTIVITIES
         </h2>
         <SearchBar onSubmit={handleSubmit} isPending={search.isPending} setDate={setDate} date={date} />
       </div>
         <Separator className="mt-20"/>
         <div className="flex flex-row flex-wrap gap-5 mx-auto justify-center my-20">
-          {tours?.map((tour: any, index: number) => (
-            <TourWobbleCard key={index} tour={tour} isLoading={fetchTours.isPending}/>
+          {activities?.map((activity: any, index: number) => (
+            <ActivityWobbleCard key={index} activity={activity} isLoading={fetchActivities.isPending}/>
           ))}
         </div>
       </div>

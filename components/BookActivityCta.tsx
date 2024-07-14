@@ -29,31 +29,36 @@ import {
 } from "@/app/features/booking/bookingSlice";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { DateRange } from "react-day-picker";
 
 type Props = {
   specialNote?: string;
   price: number;
   discount: number;
-  tourId: string;
+  activityId: string;
   userId: string;
-  tourName: string;
+  activityName: string;
   className?: React.HTMLAttributes<HTMLDivElement>;
 };
 
-export default function BookTourCta({
+export default function BookActivityCta({
   specialNote,
   price,
   discount,
-  tourId,
+  activityId,
   userId,
-  tourName,
+  activityName,
   className,
 }: Props) {
+  const [dates, setDates] = useState<DateRange | undefined>({
+    from: new Date(),
+    to: addDays(new Date(), 7),
+  });
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [bookingPrice, setBookingPrice] = useState(price);
   const { user } = useUser();
   const router = useRouter();
-  
+
   const { adultCount, childrenCount, infantCount, guests } = useSelector(
     (store: any) => store.booking
   );
@@ -62,27 +67,33 @@ export default function BookTourCta({
 
   const createBooking = useMutation({
     mutationFn: async () => {
+      if (!dates?.to) {
+        toast.error("Please select an end date date");
+        return;
+      }
       const res = await axios.post("/api/bookings", {
-        startDate: date?.toDateString().slice(0, 15),
-        endDate: addDays(date!, 3).toDateString().slice(0, 15),
+        startDate:
+          activityName === "Volunteering"
+            ? dates?.from?.toDateString().slice(0, 15)
+            : date?.toDateString().slice(0, 15),
+        endDate:
+          activityName === "Volunteering"
+            ? dates?.to?.toDateString().slice(0, 15)
+            : addDays(date!, 7).toDateString().slice(0, 15),
         discount,
         adultCount,
         childrenCount,
         infantCount,
         guests,
-        noOfDays: 3,
+        noOfDays: activityName === "Volunteering" ? 5 : 7,
         bookingPrice,
-        tourId,
+        activityId,
         userId,
-        tourName,
+        activityName,
       });
       return res.data;
     },
   });
-
-  function handleDateSelect(date: Date | undefined) {
-    setDate(date);
-  }
 
   function calculateDiscountPrice() {
     let discPrice = 0;
@@ -132,7 +143,7 @@ export default function BookTourCta({
       onSuccess: ({ message }) => {
         console.log("Booking successfully created", { message }),
           toast.success("Booking successfully created");
-          router.refresh();
+        router.refresh();
       },
       onError: (error) => {
         console.log("Error creating booking", error);
@@ -145,52 +156,86 @@ export default function BookTourCta({
       <h3>
         <span
           className={`${
-            discount !== 0 && "text-muted-foreground"
+            discount !== 0 && "text-green-700 dark:text-green-600"
           } flex flex-col font-bold text-lg md:text-xl`}
         >
-          <p>Price per Person: ${calculateTotalPrice()}</p>
+          Book a Trip
         </span>
-        {discount !== 0 && (
-          <span className="text-red-500 font-bold text-lg md:text-xl">
-            {" "}
-            | discount {discount}% Now <span>${calculateDiscountPrice()}</span>
-          </span>
-        )}
       </h3>
       <Separator className="bg-primary my-2" />
       {specialNote && <h4 className="my-8">{specialNote}</h4>}
       <form className="mx-auto w-fit pt-2" onSubmit={handleSubmit}>
-        <Label htmlFor="tour dates" className="text-base">
-          Tour Dates
+        <Label htmlFor="activity dates" className="text-base">
+          {activityName === "Volunteering" ? <>Dates</> : <>Date</>}
         </Label>
         <div className={cn("grid gap-2", className)}>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                id="date"
-                variant={"outline"}
-                className={cn(
-                  "w-[200px] md:w-[240px] lg:w-[300px] justify-start text-left font-normal overflow-hidden",
-                  !date && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="hidden sm:block mr-1 md:mr-2 h-4 w-4" />
-                {date ? format(date, "PPP") : <span>Pick a date</span>}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="center">
-              <Calendar
-                initialFocus
-                mode="single"
-                selected={date}
-                onSelect={handleDateSelect}
-                disabled={(date) => date < new Date()}
-              />
-            </PopoverContent>
-          </Popover>
+          {activityName === "Volunteering" ? (
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="date"
+                  variant={"outline"}
+                  className={cn(
+                    "w-[300px] justify-start text-left font-normal",
+                    !date && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dates?.from ? (
+                    dates.to ? (
+                      <>
+                        {format(dates.from, "LLL dd, y")} -{" "}
+                        {format(dates.to, "LLL dd, y")}
+                      </>
+                    ) : (
+                      format(dates.from, "LLL dd, y")
+                    )
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  initialFocus
+                  mode="range"
+                  defaultMonth={dates?.from}
+                  selected={dates}
+                  onSelect={setDates}
+                  numberOfMonths={2}
+                />
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="date"
+                  variant={"outline"}
+                  className={cn(
+                    "w-[200px] md:w-[240px] lg:w-[300px] justify-start text-left font-normal overflow-hidden",
+                    !date && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="hidden sm:block mr-1 md:mr-2 h-4 w-4" />
+                  {date ? format(date, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  initialFocus
+                  mode="single"
+                  selected={date}
+                  onSelect={setDate}
+                  disabled={(date) => date < new Date()}
+                />
+              </PopoverContent>
+            </Popover>
+          )}
         </div>
         <p className="text-xs text-muted-foreground mb-2">
-          Please select your tour dates
+          Please select your activity date
+          {activityName === "Volunteering" && <>s</>}
         </p>
         <Label htmlFor="first Name" className="text-base">
           First Name

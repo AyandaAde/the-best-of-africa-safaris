@@ -7,20 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-type ToursActivities {
+type ActivityActivities {
   icon String
   name String
 }
 
-type ToursDescription {
+type ActivityDescription {
   heading String
   text    String
 }
 
-model Tour {
-  id          String             @id @default(auto()) @map("_id") @db.ObjectId
-  activities  ToursActivities[]
-  description ToursDescription[]
+model Activity {
+  id          String                @id @default(auto()) @map("_id") @db.ObjectId
+  activities  ActivityActivities[]
+  description ActivityDescription[]
   imageUrl    String
   images      String[]
   link        String?
@@ -30,29 +30,29 @@ model Tour {
   Booking     Booking[]
   Review      Review[]
 
-  @@map("tours")
+  @@map("activity")
 }
 
 model Booking {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  tourId    String   @db.ObjectId
-  userId    String   @db.ObjectId
-  userName  String?
-  tourName  String?
-  guests    Int
-  adults    Int?
-  children  Int?
-  infants   Int?
-  noOfDays  Int
-  discount  Int?
-  startDate String
-  endDate   String
-  price     Int
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tour      Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Review    Review[]
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  activityId   String   @db.ObjectId
+  userId       String   @db.ObjectId
+  userName     String?
+  activityName String?
+  guests       Int
+  adults       Int?
+  children     Int?
+  infants      Int?
+  noOfDays     Int
+  discount     Int?
+  startDate    String
+  endDate      String
+  price        Int
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activity     Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  Review       Review[]
 
   @@map("bookings")
 }
@@ -73,17 +73,17 @@ model User {
 }
 
 model Review {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  tourId    String   @db.ObjectId
-  bookingId String   @db.ObjectId
-  userId    String   @db.ObjectId
-  rating    Int
-  review    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tour      Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
-  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  activityId String   @db.ObjectId
+  bookingId  String   @db.ObjectId
+  userId     String   @db.ObjectId
+  rating     Int
+  review     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  booking    Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@map("reviews")
 }

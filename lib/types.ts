@@ -1,32 +1,31 @@
+type ActivitiesActivities = {
+  icon: string;
+  name: string;
+};
 
-type ToursActivities = {
-    icon: string;
-    name: string;
-  };
+type ActivitiesDescription = {
+  heading: string;
+  text: string;
+};
 
-  type ToursDescription = {
-    heading: string;
-    text: string;
-  }
-
-export type Tours = {
-    id: string;
-    activities: ToursActivities[]
-    description: ToursDescription[]
-    imageUrl: string;
-    images: string[];
-    name: string;
-    price: number;
-    slug: string;
+export type Activities = {
+  id: string;
+  activities: ActivitiesActivities[];
+  description: ActivitiesDescription[];
+  imageUrl: string;
+  images: string[];
+  name: string;
+  price: number;
+  slug: string;
 };
 
 export type Booking = {
   id: string;
-  tour: Tours;
-  tourId: string;
+  activities: Activities;
+  activityId: string;
   userId: string;
   userName: string;
-  tourName: string;
+  activityName: string;
   guests: number;
   adults: number;
   children: number;
@@ -40,9 +39,8 @@ export type Booking = {
   updatedAt: Date;
 };
 
-
 export type Review = {
-  tour: {
+  activity: {
     id: string;
     imageUrl: string;
     images: string[];
@@ -50,25 +48,22 @@ export type Review = {
     name: string;
     price: number;
     slug: string;
-};
-    user: {
-        id: string;
-        userId: string;
-        fName: string | null;
-        lName: string | null;
-        email: string | null;
-        image: string | null;
-        about: string | null;
-    };
+  };
+  user: {
     id: string;
-    tourId: string;
-    bookingId: string;
-    updatedAt: Date;
     userId: string;
-    rating: number;
-    review: string;
-    createdAt: Date;
-}
-
-
-  
+    fName: string | null;
+    lName: string | null;
+    email: string | null;
+    image: string | null;
+    about: string | null;
+  };
+  id: string;
+  activityId: string;
+  bookingId: string;
+  updatedAt: Date;
+  userId: string;
+  rating: number;
+  review: string;
+  createdAt: Date;
+};

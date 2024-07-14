@@ -2,7 +2,6 @@ import UserAbout from "@/components/UserAbout";
 import TabsComp from "@/components/TabsComp";
 import { prisma } from "@/lib/db/prisma";
 
-
 export default async function UserPage(props: { params: { id: string } }) {
   const {
     params: { id: userId },
@@ -21,7 +20,19 @@ export default async function UserPage(props: { params: { id: string } }) {
       userId: user?.id,
     },
     include: {
-      tour: true,
+      activity: true,
+    },
+  });
+
+  const reviews = await prisma.review.findMany({
+    orderBy: {
+      id: "desc",
+    },
+    where: {
+      userId: user?.id,
+    },
+    include: {
+      activity: true,
     },
   });
 
@@ -31,10 +42,16 @@ export default async function UserPage(props: { params: { id: string } }) {
         <UserAbout userId={user?.userId!} userAbout={user?.about!} />
         <div className="md:col-span-7 lg:col-span-8">
           <div className="flex items-center">
-            <h5 className="text-2xl font-bold mr-3">Hello, {user?.fName} {user?.lName}</h5>
+            <h5 className="text-2xl font-bold mr-3">
+              Hello, {user?.fName} {user?.lName}
+            </h5>
           </div>
           <nav className="sticky top-0 px-2 w-fit mx-auto md:w-full md:px-5 py-3 mb-8">
-            <TabsComp bookings={bookings} userId={user?.userId!}/>
+            <TabsComp
+              bookings={bookings}
+              reviews={reviews}
+              userId={user?.userId!}
+            />
           </nav>
         </div>
       </div>

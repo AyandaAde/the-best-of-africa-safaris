@@ -100,21 +100,21 @@ export const InfiniteMovingCards = ({
               />
               <div className="flex gap-2 items-center mb-2">
                 <Image
-                src={item.user.image!}
-                alt={item.user.fName!}
-                width={50}
-                height={50}
-                className="rounded-full"
+                  src={item.user.image!}
+                  alt={item.user.fName!}
+                  width={50}
+                  height={50}
+                  className="rounded-full"
                 />
-              <div className="my-1 md:my-0 flex items-center">
-                {Array.from({ length: item.rating }).map((_, index) => (
-                  <StarFilledIcon
-                    key={index}
-                    color={"orange"}
-                    className="w-5 h-5 md:w-6 md:h-6"
-                  />
-                ))}
-              </div>
+                <div className="my-1 md:my-0 flex items-center">
+                  {Array.from({ length: item.rating }).map((_, index) => (
+                    <StarFilledIcon
+                      key={index}
+                      color={"orange"}
+                      className="w-5 h-5 md:w-6 md:h-6"
+                    />
+                  ))}
+                </div>
               </div>
               <span className=" relative z-20 text-sm sm:text-base sm:leading-[1.6] text-gray-100 font-normal">
                 {item.review}
@@ -125,7 +125,10 @@ export const InfiniteMovingCards = ({
                     {item.user.fName} {item.user.lName}
                   </span>
                   <span className="text-sm sm:text-base sm:leading-[1.6] text-gray-400 font-normal">
-                    Tour: {item.tour.name}
+                    Activity:{" "}
+                    {item.activity.name === "Volunteering"
+                      ? "Volunteering"
+                      : "7 day trip"}
                   </span>
                 </span>
               </div>

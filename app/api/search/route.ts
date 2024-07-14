@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   } = await req.json();
 
   try {
-    const searchResults = await prisma.tour.findMany({
+    const searchResults = await prisma.activity.findMany({
       where: {
         name: {
           contains: searchQuery,
@@ -23,11 +23,8 @@ export async function POST(req: Request) {
     });
     console.log(searchResults);
     return NextResponse.json(searchResults);
-
   } catch (error) {
     console.log(error);
     return new NextResponse("Error", { status: 400 });
   }
-
-  return new NextResponse("Hi", { status: 200 });
 }

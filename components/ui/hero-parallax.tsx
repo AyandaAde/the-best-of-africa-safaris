@@ -10,14 +10,10 @@ import {
 import Link from "next/link";
 import { HeroHighlightComp } from "../HighlightText";
 import { DirectionAwareHover } from "./direction-aware-hover";
-import { Tours } from "@/lib/types";
 import PriceTag from "../PriceTag";
+import { Activities } from "@/lib/types";
 
-export const HeroParallax = ({
-  products,
-}: {
-  products: Tours[];
-}) => {
+export const HeroParallax = ({ products }: { products: Activities[] }) => {
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);
@@ -103,7 +99,7 @@ export const Header = () => {
   return (
     <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
       <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
-      <HeroHighlightComp/>
+        <HeroHighlightComp />
       </h1>
       <motion.p
         initial={{
@@ -121,9 +117,9 @@ export const Header = () => {
         }}
         className="max-w-2xl text-base md:text-2xl mt-8 dark:text-neutral-200"
       >
-        Craft your dream African adventure with The Best of Africa Safaris. Witness
-        iconic wildlife, breathtaking landscapes, and unforgettable sunsets on
-        safaris led by expert guides.
+        Craft your dream African adventure with The Best of Africa Safaris.
+        Witness iconic wildlife, breathtaking landscapes, and unforgettable
+        sunsets on safaris led by expert guides.
       </motion.p>
     </div>
   );
@@ -133,7 +129,7 @@ export const ProductCard = ({
   product,
   translate,
 }: {
-  product: Tours;
+  product: Activities;
   translate: MotionValue<number>;
 }) => {
   return (
@@ -152,27 +148,23 @@ export const ProductCard = ({
         className="block group-hover/product:shadow-2xl "
       >
         <DirectionAwareHover imageUrl={product.imageUrl}>
-      <h2
-      className="font-bold text-xl">
-          <motion.div
-            initial={{
+          <h2 className="font-bold text-xl">
+            <motion.div
+              initial={{
                 opacity: 0,
                 x: -100,
-            }}
-            whileInView={{
+              }}
+              whileInView={{
                 opacity: 1,
                 x: -25,
-            }}
-            transition={{
+              }}
+              transition={{
                 duration: 0.5,
-            }}
-            className="absolute hidden group-hover:block -z-10 inset-0 w-full h-7 bg-primary"
+              }}
+              className="absolute hidden group-hover:block -z-10 inset-0 w-full h-7 bg-primary"
             />
-        {product.name}
-      </h2>
-      <p className="font-normal text-sm mt-2">
-        From <PriceTag price={product.price}/>
-      </p>
+            {product.name}
+          </h2>
         </DirectionAwareHover>
       </Link>
     </motion.div>

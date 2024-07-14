@@ -37,7 +37,7 @@ export default function Footer() {
                 <div className="flex items-center py-4">
                   <MailIcon />
                   <Link
-                    href="mailto:sonayilodge@gmail.com"
+                    href="mailto:info@bestofafricasafaris.co.tz"
                     className="ml-2 hover:text-primary"
                   >
                     info@bestofafricasafaris.co.tz
@@ -46,34 +46,31 @@ export default function Footer() {
                 <div className="flex items-center py-4">
                   <SmartphoneIcon />
                   <Link
-                    href="tel:+255767695030"
+                    href="tel:+255767-695030"
                     className="ml-2 hover:text-primary"
                   >
-                    +255767695030
+                    +255767-695030
                   </Link>
                 </div>
               </div>
             </div>
             <div className="md:text-left">
               <h4 className="font-semibold text-lg py-3">Company</h4>
-                <Link
-                  href="/main/home"
-                  className="pb-4 hover:text-primary block"
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/main/tours"
-                  className="pb-4 hover:text-primary block"
-                >
-                  Tours
-                </Link>
-                <Link
-                  href="/main/gallery"
-                  className="pb-4 hover:text-primary block"
-                >
-                  Gallery
-                </Link>
+              <Link href="/main/home" className="pb-4 hover:text-primary block">
+                Home
+              </Link>
+              <Link
+                href="/main/tours"
+                className="pb-4 hover:text-primary block"
+              >
+                Tours
+              </Link>
+              <Link
+                href="/main/gallery"
+                className="pb-4 hover:text-primary block"
+              >
+                Gallery
+              </Link>
             </div>
             <div className="md:text-left">
               <h4 className="font-semibold text-lg py-3">Legal</h4>
@@ -100,22 +97,22 @@ export default function Footer() {
         </div>
         <Separator className="my-10 bg-neutral-700" />
         <div className="flex flex-col md:flex-row items-center justify-between w-full">
-        <p className="px-4 text-center">
-          {" "}
-          &copy; {year} The Best of Africa Safaris.
-        </p>
-        <div className="flex items-center pt-4">
-                  <CodeIcon />
-                  <p className="ml-2">
-                    Made by{" "}
-                    <Link
-                      href="https://ayanda.vercel.app/"
-                      className="underline hover:text-primary"
-                    >
-                      Ayanda Kinyambo
-                    </Link>
-                  </p>
-                </div>
+          <p className="px-4 text-center">
+            {" "}
+            &copy; {year} The Best of Africa Safaris.
+          </p>
+          <div className="flex items-center pt-4">
+            <CodeIcon />
+            <p className="ml-2">
+              Made by{" "}
+              <Link
+                href="https://ayanda.vercel.app/"
+                className="underline hover:text-primary"
+              >
+                Ayanda Kinyambo
+              </Link>
+            </p>
+          </div>
         </div>
       </footer>
     </>

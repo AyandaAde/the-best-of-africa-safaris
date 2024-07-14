@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function AboutPage() {
-
   const team = [
     {
       image: "/images/mr-bayo.jpeg",
@@ -33,6 +32,27 @@ export default function AboutPage() {
   ];
 
   const content = [
+    {
+      heading: "Why us",
+      title1: "Why travel",
+      title2: "With us",
+      description: `Best of Africa Safaris Company Ltd Tanzania welcomes you to
+                travel with us on your next dream safari. We have over 20 years working
+                 experience. You can enjoy the beauty of the Tanzanian National parks, animals
+                 and environment with us as well as the people by working with them in community projects
+                or volunteering.`,
+      content: (
+        <div className="h-full w-full  flex items-center justify-center text-white">
+          <Image
+            src="/images/lion-cub.avif"
+            width={300}
+            height={300}
+            className="h-full w-full object-cover"
+            alt="linear board demo"
+          />
+        </div>
+      ),
+    },
     {
       heading: "Who we are",
       title1: "Where we",
