@@ -160,7 +160,7 @@ export default function TabsComp({ bookings, reviews, userId }: Props) {
 
   return (
     <Tabs defaultValue="bookings" className="w-full">
-      <TabsList className="grid w-full grid-cols-2 pb-1">
+      <TabsList className="grid w-[300px] md:w-full grid-cols-2 pb-1">
         <TabsTrigger
           value="bookings"
           className="flex items-center relative bottom-[2px] h-9"
@@ -174,7 +174,7 @@ export default function TabsComp({ bookings, reviews, userId }: Props) {
           <StarFilledIcon className="w-7 h-7" /> Reviews
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="bookings">
+      <TabsContent value="bookings" className="w-[300px] md:w-full">
         <Table>
           <TableCaption>
             {bookings.length === 0 ? (
@@ -309,7 +309,7 @@ export default function TabsComp({ bookings, reviews, userId }: Props) {
           </TableBody>
         </Table>
       </TabsContent>
-      <TabsContent value="reviews">
+      <TabsContent value="reviews" className="w-[300px] md:w-full">
         <Table>
           <TableCaption>
             {reviews.length !== 0 ? (
