@@ -121,7 +121,7 @@ export default function Gallery() {
       >
         <Button className="px-4 py-2 backdrop-blur-sm border bg-emerald-300/10 border-emerald-500/20 text-white mx-auto text-center rounded-full relative mt-4">
           <Link href={"/main/activities"} className="w-full">
-            Book a tour now →
+            Book an activity now →
           </Link>
           <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
         </Button>
@@ -179,17 +179,15 @@ export default function Gallery() {
                         </CarouselItem>
                       );
                     })}
-                    {
-                      animals[modalIndex].video && (
-                        <CarouselItem>
-                          <video
-                            src={animals[modalIndex].video}
-                            controls
-                            className="h-[520px] w-[600px] bg-black rounded-xl group-hover:scale-125 transition duration-1000"
-                          />
-                        </CarouselItem>
-                      )
-                    }
+                    {animals[modalIndex].video && (
+                      <CarouselItem>
+                        <video
+                          src={animals[modalIndex].video}
+                          controls
+                          className="h-[520px] w-[600px] bg-black rounded-xl group-hover:scale-125 transition duration-1000"
+                        />
+                      </CarouselItem>
+                    )}
                   </CarouselContent>
                   <CarouselPrevious />
                   <CarouselNext />
