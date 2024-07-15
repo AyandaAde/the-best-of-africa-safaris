@@ -144,7 +144,7 @@ export const ProductCard = ({
       className="group group/product h-96 w-[30rem] relative flex-shrink-0"
     >
       <Link
-        href={`/main/tour/${product.slug}`}
+        href={`/main/activity/${product.slug}`}
         className="block group-hover/product:shadow-2xl "
       >
         <DirectionAwareHover imageUrl={product.imageUrl}>

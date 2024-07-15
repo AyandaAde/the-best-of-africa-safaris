@@ -60,10 +60,10 @@ export default function Footer() {
                 Home
               </Link>
               <Link
-                href="/main/tours"
+                href="/main/activities"
                 className="pb-4 hover:text-primary block"
               >
-                Tours
+                Activities
               </Link>
               <Link
                 href="/main/gallery"

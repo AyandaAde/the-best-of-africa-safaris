@@ -171,7 +171,7 @@ export default function TabsComp({ bookings, reviews, userId }: Props) {
           value="reviews"
           className="flex items-center gap-1 relative bottom-[2px] h-9"
         >
-          <StarFilledIcon className="w-7 h-7" /> Reviews
+          <StarFilledIcon className="w-7 h-7" /> Your Reviews
         </TabsTrigger>
       </TabsList>
       <TabsContent value="bookings" className="w-[300px] md:w-full">
