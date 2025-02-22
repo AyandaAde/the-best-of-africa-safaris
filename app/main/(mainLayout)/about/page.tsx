@@ -12,21 +12,21 @@ export default function AboutPage() {
     {
       image: "/images/mr-bayo.jpeg",
       name: "Modest Bayo",
-      title: "Founder and CEO",
+      title: "Founder, CEO and Tour Guide",
     },
     {
-      image: "https://demo.artureanec.com/html/wild-world/img/team_4.jpg",
-      name: "Chris Patt",
+      image: "/images/placeholder-female.jpg",
+      name: "Anna Chenelo",
       title: "Reservation Manager",
     },
     {
       image: "/images/ayanda.jpeg",
       name: "Ayanda Kinyambo",
-      title: "Software Engineer",
+      title: "Web Manager",
     },
     {
-      image: "https://demo.artureanec.com/html/wild-world/img/team_3.jpg",
-      name: "Martin Harix",
+      image: "/images/placeholder-male.jpg",
+      name: "Mr.Emanuel",
       title: "Tour Guide",
     },
   ];
@@ -177,6 +177,10 @@ export default function AboutPage() {
           <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
         </Button>
       </ImageSlider>
+      <audio controls className="h-10 w-9/12 mt-10 mx-auto">
+        <source src="/audio/background-audio.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
       <div className="p-10">
         <StickyScroll content={content} />
       </div>

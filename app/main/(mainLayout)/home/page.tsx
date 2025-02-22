@@ -10,7 +10,7 @@ export default async function HomePage() {
       <Hero />
       <div className="relative w-full bg-gradient-to-b from-white to-[#F3F5F4] dark:from-black dark:to-black text-black dark:text-white">
         <div className="pt-20 md:pt-40 w-3/4 mx-auto">
-          <div className="grid md:grid-cols-[.5fr_1fr] gap-9">
+          <div className="grid md:grid-cols-[.5fr_1fr] items-center gap-9">
             <div className="flex flex-col gap-5">
               <div className="flex flex-row items-center">
                 <div className="border border-primary border-1 w-9 mr-2" />
@@ -22,6 +22,10 @@ export default async function HomePage() {
                 </span>{" "}
                 Safaris
               </h2>
+              <audio controls className="h-10 w-10/12">
+                <source src="/audio/background-audio.mp3" type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
               <div className="w-1/2 border-2 shadow-md hover:bg-gradient-to-r hover:from-[#024034] hover:to-primary hover:border-none border-primary hover:-translate-y-1 transition duration-200 text-center rounded-sm">
                 <Button
                   variant={"link"}

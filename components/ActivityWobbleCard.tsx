@@ -5,7 +5,6 @@ import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { WobbleCard } from "./ui/wobble-card";
-import PriceTag from "./PriceTag";
 import Link from "next/link";
 import styles from "@/app/scss/main.module.scss";
 import { Skeleton } from "@/components/ui/skeleton";
