@@ -16,6 +16,7 @@ import { Button } from "./ui/button";
 import DarkModeButton from "./DarkModeButton";
 import { forwardRef } from "react";
 import { Activities } from "@/lib/types";
+import Image from "next/image";
 
 interface Props {
   activities: Activities[];
@@ -33,7 +34,13 @@ export default function Navbar({ className, activities }: Props) {
             <NavigationMenuItem>
               <Link href="/main/home" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Home
+                  <Image
+                    src="/images/boasafarislogo.png"
+                    alt="The Best of Africa Safaris Logo"
+                    width={500}
+                    height={500}
+                    className="h-6 w-[75px] dark:invert"
+                  />
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
